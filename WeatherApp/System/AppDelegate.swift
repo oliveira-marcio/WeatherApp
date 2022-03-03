@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  WeatherApp
-//
-//  Created by Márcio Oliveira on 02/03/2022.
-//
-
 import UIKit
 
 @main
