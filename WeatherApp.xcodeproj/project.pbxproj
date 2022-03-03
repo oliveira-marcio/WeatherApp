@@ -37,10 +37,74 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C722BF227D14CC300A0E84D /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		9C722BF327D14CD200A0E84D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		9C722BF427D14CD900A0E84D /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				9C7E049427CFFBB3007C4CBA /* ViewController.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		9C722BF527D14DCE00A0E84D /* WheatherAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				9C722BF827D14E3000A0E84D /* Domain */,
+				9C722BF727D14E0300A0E84D /* Data */,
+				9C722BF627D14DF100A0E84D /* Presentation */,
+			);
+			path = WheatherAppTests;
+			sourceTree = "<group>";
+		};
+		9C722BF627D14DF100A0E84D /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		9C722BF727D14E0300A0E84D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		9C722BF827D14E3000A0E84D /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		9C722BF927D14EC800A0E84D /* System */ = {
+			isa = PBXGroup;
+			children = (
+				9C7E049027CFFBB3007C4CBA /* AppDelegate.swift */,
+				9C7E049227CFFBB3007C4CBA /* SceneDelegate.swift */,
+				9C7E04A827D009C6007C4CBA /* Localizable.strings */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
 		9C7E048427CFFBB3007C4CBA = {
 			isa = PBXGroup;
 			children = (
 				9C7E048F27CFFBB3007C4CBA /* WeatherApp */,
+				9C722BF527D14DCE00A0E84D /* WheatherAppTests */,
 				9C7E048E27CFFBB3007C4CBA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,10 +120,10 @@
 		9C7E048F27CFFBB3007C4CBA /* WeatherApp */ = {
 			isa = PBXGroup;
 			children = (
-				9C7E049027CFFBB3007C4CBA /* AppDelegate.swift */,
-				9C7E049227CFFBB3007C4CBA /* SceneDelegate.swift */,
-				9C7E049427CFFBB3007C4CBA /* ViewController.swift */,
-				9C7E04A827D009C6007C4CBA /* Localizable.strings */,
+				9C722BF227D14CC300A0E84D /* Domain */,
+				9C722BF327D14CD200A0E84D /* Data */,
+				9C722BF427D14CD900A0E84D /* Presentation */,
+				9C722BF927D14EC800A0E84D /* System */,
 				9C7E049927CFFBB5007C4CBA /* Assets.xcassets */,
 				9C7E049B27CFFBB5007C4CBA /* LaunchScreen.storyboard */,
 				9C7E049E27CFFBB5007C4CBA /* Info.plist */,
