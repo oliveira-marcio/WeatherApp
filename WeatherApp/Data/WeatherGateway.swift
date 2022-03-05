@@ -4,7 +4,11 @@ public enum WeatherError: Error {
     case operationFailed
 }
 
-final class WeatherGatewayImplementation {
+protocol WeatherGateway {
+    func fetchCurrentWeather(for query: String, completion: @escaping (Result<Weather, WeatherError>) -> Void)
+}
+
+final class WeatherGatewayImplementation: WeatherGateway {
     private let baseURL: URL
     private let apiKey: String
     private let requestExecutor: RequestExecutor

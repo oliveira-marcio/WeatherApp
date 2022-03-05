@@ -1,7 +1,7 @@
 import Foundation
 @testable import WeatherApp
 
-public class URLSessionStub: URLSessionProtocol {
+public final class URLSessionStub: URLSessionProtocol {
     public typealias URLSessionCompletionHandlerResponse = (data: Data?, response: URLResponse?, error: Error?)
 
     var responses = [URLSessionCompletionHandlerResponse]()

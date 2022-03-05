@@ -82,10 +82,6 @@ final class WeatherGatewayTests: XCTestCase {
                                           response: HTTPURLResponse(statusCode: 200),
                                           error: nil))
 
-        let expectedWeather = Weather(name: "New York, United States of America",
-                                      temperature: 4,
-                                      description: "Partly cloudy")
-
         let getWeatherExpectation = expectation(description: "get current weather expectation")
         var actualWeather: Weather?
 
@@ -96,7 +92,7 @@ final class WeatherGatewayTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
 
-        XCTAssertEqual(actualWeather, expectedWeather)
+        XCTAssertEqual(actualWeather, .nyDummy)
     }
 
     func test_GIVEN_query_WHEN_fetchCurrentWeather_is_called_and_request_fails_THEN_it_should_return_error() {
