@@ -2,48 +2,27 @@ import UIKit
 
 class CurrentWeatherViewController: UIViewController {
 
-    private let label: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .preferredFont(forTextStyle: .title1)
-        label.text = NSLocalizedString("label", comment: "")
-        label.isUserInteractionEnabled = true
-        return label
-    }()
+    internal lazy var searchTextView: UITextView = createSearchTextView()
+    internal lazy var searchButton: UIButton = createSearchButton()
+    internal lazy var searchContainer: UIStackView = createSearchContainerStackView()
+    internal lazy var rootView: UIStackView = createRootView()
+    internal lazy var label: UILabel = createTestLebel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemBackground
-        view.addSubview(label)
-
-        let tapGesture = UITapGestureRecognizer(target: self,
-                                                action: #selector(createActionSheet))
-
-        label.addGestureRecognizer(tapGesture)
-
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        setupSubviews()
+        setupConstraints()
     }
-
-    @objc private func createActionSheet() {
-        let optionMenu = UIAlertController(title: "Current weather for",
-                                           message: "The City",
-                                           preferredStyle: .actionSheet)
-
-        for option in 1...3 {
-            let action = UIAlertAction(title: "Test \(option)", style: .default)
-            action.isEnabled = false
-            optionMenu.addAction(action)
-        }
-
-        optionMenu.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-
-        present(optionMenu, animated: true) {() -> Void in
-            optionMenu.view.superview?.subviews[0].isUserInteractionEnabled = false
-        }
+    
+    /**
+     * Workaround to force the search text view border color update on traitCollectionDidChange()
+     * It should be properly handled in a custom view
+     */
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        // Not the best approach to force the search text view border color update.
+        // It should be handled in a custom view
+        searchTextView.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor
+        searchTextView.layoutIfNeeded()
     }
 }
 

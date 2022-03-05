@@ -27,6 +27,8 @@
 		9C722C3127D3C87400A0E84D /* CurrentWeatherPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C722C3027D3C87400A0E84D /* CurrentWeatherPresenterTests.swift */; };
 		9C722C3327D3C8AC00A0E84D /* FakeGetCurrentWeatherUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C722C3227D3C8AC00A0E84D /* FakeGetCurrentWeatherUseCase.swift */; };
 		9C722C3527D3C9F900A0E84D /* CurrentWeatherViewSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C722C3427D3C9F900A0E84D /* CurrentWeatherViewSpy.swift */; };
+		9C722C3727D3EE9300A0E84D /* CurrentWeatherViewController+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C722C3627D3EE9300A0E84D /* CurrentWeatherViewController+Views.swift */; };
+		9C722C3927D4017400A0E84D /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C722C3827D4017400A0E84D /* UIColor+Extension.swift */; };
 		9C7E049127CFFBB3007C4CBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7E049027CFFBB3007C4CBA /* AppDelegate.swift */; };
 		9C7E049327CFFBB3007C4CBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7E049227CFFBB3007C4CBA /* SceneDelegate.swift */; };
 		9C7E049527CFFBB3007C4CBA /* CurrentWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C7E049427CFFBB3007C4CBA /* CurrentWeatherViewController.swift */; };
@@ -67,6 +69,8 @@
 		9C722C3027D3C87400A0E84D /* CurrentWeatherPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherPresenterTests.swift; sourceTree = "<group>"; };
 		9C722C3227D3C8AC00A0E84D /* FakeGetCurrentWeatherUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeGetCurrentWeatherUseCase.swift; sourceTree = "<group>"; };
 		9C722C3427D3C9F900A0E84D /* CurrentWeatherViewSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherViewSpy.swift; sourceTree = "<group>"; };
+		9C722C3627D3EE9300A0E84D /* CurrentWeatherViewController+Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentWeatherViewController+Views.swift"; sourceTree = "<group>"; };
+		9C722C3827D4017400A0E84D /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		9C7E048D27CFFBB3007C4CBA /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C7E049027CFFBB3007C4CBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C7E049227CFFBB3007C4CBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +124,7 @@
 			children = (
 				9C722C2E27D3C20A00A0E84D /* CurrentWeatherPresenter.swift */,
 				9C7E049427CFFBB3007C4CBA /* CurrentWeatherViewController.swift */,
+				9C722C3627D3EE9300A0E84D /* CurrentWeatherViewController+Views.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 				9C7E049027CFFBB3007C4CBA /* AppDelegate.swift */,
 				9C7E049227CFFBB3007C4CBA /* SceneDelegate.swift */,
 				9C7E04A827D009C6007C4CBA /* Localizable.strings */,
+				9C722C3827D4017400A0E84D /* UIColor+Extension.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -355,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C722C1B27D28ECF00A0E84D /* Weather.swift in Sources */,
+				9C722C3727D3EE9300A0E84D /* CurrentWeatherViewController+Views.swift in Sources */,
 				9C722C1427D2869500A0E84D /* RequestExecutor.swift in Sources */,
 				9C722BFD27D1559000A0E84D /* URLSessionProtocol.swift in Sources */,
 				9C7E049527CFFBB3007C4CBA /* CurrentWeatherViewController.swift in Sources */,
@@ -363,6 +370,7 @@
 				9C722BFB27D1546200A0E84D /* WeatherAPI.swift in Sources */,
 				9C7E049127CFFBB3007C4CBA /* AppDelegate.swift in Sources */,
 				9C7E049327CFFBB3007C4CBA /* SceneDelegate.swift in Sources */,
+				9C722C3927D4017400A0E84D /* UIColor+Extension.swift in Sources */,
 				9C722C1227D284DF00A0E84D /* WeatherGateway.swift in Sources */,
 				9C722C2427D3B1F500A0E84D /* GetCurrentWeatherUseCase.swift in Sources */,
 			);
