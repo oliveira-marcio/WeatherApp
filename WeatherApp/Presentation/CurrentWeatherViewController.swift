@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class CurrentWeatherViewController: UIViewController {
 
     private let label: UILabel = {
         let label = UILabel()
