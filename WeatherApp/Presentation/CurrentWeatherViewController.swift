@@ -2,9 +2,7 @@ import UIKit
 
 class CurrentWeatherViewController: UIViewController {
 
-    internal lazy var searchTextView: UITextView = createSearchTextView()
-    internal lazy var searchButton: UIButton = createSearchButton()
-    internal lazy var searchContainer: UIStackView = createSearchContainerStackView()
+    internal lazy var searchBar: UISearchBar = createSearchBar()
     internal lazy var rootView: UIStackView = createRootView()
     internal lazy var label: UILabel = createTestLebel()
 
@@ -15,14 +13,26 @@ class CurrentWeatherViewController: UIViewController {
     }
     
     /**
-     * Workaround to force the search text view border color update on traitCollectionDidChange()
+     * Workaround to force the search bar border color update on traitCollectionDidChange()
      * It should be properly handled in a custom view
      */
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        // Not the best approach to force the search text view border color update.
-        // It should be handled in a custom view
-        searchTextView.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor
-        searchTextView.layoutIfNeeded()
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            searchBar.searchTextField.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor
+        }
+    }
+}
+
+extension CurrentWeatherViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let _ = searchBar.text else {
+            return
+        }
+
+        searchBar.resignFirstResponder()
+        createActionSheet()
     }
 }
 

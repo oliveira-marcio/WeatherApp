@@ -16,50 +16,25 @@ extension CurrentWeatherViewController {
         static let currentWeatherScene: String = "current_weather_scene"
     }
 
-    internal func createSearchTextView() -> UITextView {
-        let textField = UITextView()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.accessibilityIdentifier = AccessibilityIdentifiers.searchTextView
-        textField.layer.borderWidth = Constants.searchViewBorderWidth
-        textField.layer.cornerRadius = Constants.searchViewCornerRadius
-        textField.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor
-        textField.textContainerInset = UIEdgeInsets(top: Constants.searchViewInsets,
-                                                    left: Constants.searchViewInsets,
-                                                    bottom: Constants.searchViewInsets,
-                                                    right: Constants.searchViewInsets)
-        textField.isScrollEnabled = false
-        textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        return textField
-    }
-
-    internal func createSearchButton() -> UIButton {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.accessibilityIdentifier = AccessibilityIdentifiers.searchButton
-        button.setImage(UIImage(named: Constants.searchIcon), for: .normal)
-        button.tintColor = .dynamicColor(light: .black, dark: .white)
-        button.contentMode = .center
-        button.imageView?.contentMode = .scaleAspectFit
-        button.setContentHuggingPriority(UILayoutPriority(1000), for: .horizontal)
-        button.setContentCompressionResistancePriority(UILayoutPriority(1000), for: .horizontal)
-        button.addTarget(self, action: #selector(createActionSheet), for: .touchUpInside)
-        return button
-    }
-
-    internal func createSearchContainerStackView() -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [searchTextView, searchButton])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = Constants.smallSpacing
-        stackView.axis = .horizontal
-        stackView.setContentHuggingPriority(UILayoutPriority(1000), for: .vertical)
-        stackView.setContentCompressionResistancePriority(UILayoutPriority(1000), for: .vertical)
-        return stackView
+    internal func createSearchBar() -> UISearchBar {
+        let bar = UISearchBar()
+        bar.placeholder = "Enter location"
+        bar.searchTextField.layer.borderWidth = Constants.searchViewBorderWidth
+        bar.searchTextField.layer.cornerRadius = Constants.searchViewCornerRadius
+        bar.searchTextField.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor
+        bar.backgroundImage = UIImage()
+        bar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
+        bar.isUserInteractionEnabled = true
+        bar.setContentHuggingPriority(UILayoutPriority(1000), for: .vertical)
+        bar.setContentCompressionResistancePriority(UILayoutPriority(1000), for: .vertical)
+        bar.delegate = self
+        return bar
     }
 
     internal func createRootView() -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [searchContainer, label])
+        let stackView = UIStackView(arrangedSubviews: [searchBar, label])
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.setCustomSpacing(Constants.defaultSpacing, after: searchContainer)
+        stackView.setCustomSpacing(Constants.defaultSpacing, after: searchBar)
         stackView.alignment = .center
         stackView.axis = .vertical
         return stackView
@@ -87,12 +62,12 @@ extension CurrentWeatherViewController {
             rootView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: Constants.defaultSpacing),
             rootView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -Constants.defaultSpacing),
             rootView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Constants.defaultSpacing),
-            searchContainer.leadingAnchor.constraint(equalTo: rootView.leadingAnchor),
-            searchContainer.trailingAnchor.constraint(equalTo: rootView.trailingAnchor)
+            searchBar.leadingAnchor.constraint(equalTo: rootView.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: rootView.trailingAnchor)
         ])
     }
 
-    @objc private func createActionSheet() {
+    internal func createActionSheet() {
         let optionMenu = UIAlertController(title: "Current weather for",
                                            message: "The City",
                                            preferredStyle: .actionSheet)
