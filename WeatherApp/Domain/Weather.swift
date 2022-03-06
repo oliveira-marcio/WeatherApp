@@ -1,7 +1,7 @@
 struct Weather: Equatable {
-    private let name: String
-    private let temperature: Int
-    private let description: String
+    let name: String
+    let temperature: Int
+    let description: String
 
     public init(name: String, temperature: Int, description: String) {
         self.name = name

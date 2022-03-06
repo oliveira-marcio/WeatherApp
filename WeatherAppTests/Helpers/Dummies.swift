@@ -5,3 +5,13 @@ extension Weather {
                                  temperature: 4,
                                  description: "Partly cloudy")
 }
+
+extension CurrentWeatherViewModel {
+    static func stub(from weather: Weather) -> CurrentWeatherViewModel {
+        CurrentWeatherViewModel(title: CurrentWeatherPresenter.LocalizationKeys.resultsTitle,
+                                dismissLabel: CurrentWeatherPresenter.LocalizationKeys.resultsDismissLabel,
+                                locationName: weather.name,
+                                locationTemperature: "\(weather.temperature)\(CurrentWeatherPresenter.LocalizationKeys.resultsTemperatureSuffix)",
+                                locationDescription: weather.description)
+    }
+}

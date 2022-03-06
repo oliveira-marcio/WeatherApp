@@ -1,3 +1,6 @@
 "label" = "Hello World!";
 "WeatherRequestFailTitle" = "Error";
 "WeatherRequestFailMessage" = "Failed to request current weather";
+"WeatherResultsTitle" = "Current weather for";
+"WeatherResultsTemperatureSuffix" = "ºC";
+"WeatherResultsDismissLabel" = "Cancel";

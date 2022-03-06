@@ -67,21 +67,14 @@ extension CurrentWeatherViewController {
         ])
     }
 
+    // It should be removed!!
     internal func createActionSheet() {
-        let optionMenu = UIAlertController(title: "Current weather for",
-                                           message: "The City",
-                                           preferredStyle: .actionSheet)
+        let viewModel = CurrentWeatherViewModel(title: CurrentWeatherPresenter.LocalizationKeys.resultsTitle,
+                                                dismissLabel: CurrentWeatherPresenter.LocalizationKeys.resultsDismissLabel,
+                                                locationName: "New York",
+                                                locationTemperature: "15\(CurrentWeatherPresenter.LocalizationKeys.resultsTemperatureSuffix)",
+                                                locationDescription: "Partial Sunny")
 
-        for option in 1...3 {
-            let action = UIAlertAction(title: "Test \(option)", style: .default)
-            action.isEnabled = false
-            optionMenu.addAction(action)
-        }
-
-        optionMenu.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-
-        present(optionMenu, animated: true) {() -> Void in
-            optionMenu.view.superview?.subviews[0].isUserInteractionEnabled = false
-        }
+        CurrentWeatherRouterImplementation(currentWeatherViewController: self).displayWeatherResults(weatherViewModel: viewModel)
     }
 }

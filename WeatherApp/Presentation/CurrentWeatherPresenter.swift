@@ -2,23 +2,27 @@ import Foundation
 
 protocol CurrentWeatherView: AnyObject {
     var presenter: CurrentWeatherPresenter! { get set }
-    func display(weather: Weather)
     func display(loading: Bool)
-    func display(title: String, error: String)
 }
 
 final class CurrentWeatherPresenter {
     enum LocalizationKeys {
         static let errorTitle = NSLocalizedString("WeatherRequestFailTitle", comment: "")
         static let errorMessage = NSLocalizedString("WeatherRequestFailMessage", comment: "")
+        static let resultsTitle = NSLocalizedString("WeatherResultsTitle", comment: "")
+        static let resultsTemperatureSuffix = NSLocalizedString("WeatherResultsTemperatureSuffix", comment: "")
+        static let resultsDismissLabel = NSLocalizedString("WeatherResultsDismissLabel", comment: "")
     }
 
     private weak var view: CurrentWeatherView?
+    private let router: CurrentWeatherRouter
     private let getCurrentWeatherUseCase: GetCurrentWeatherUseCase
 
     init(view: CurrentWeatherView,
+         router: CurrentWeatherRouter,
          getCurrentWeatherUseCase: GetCurrentWeatherUseCase) {
         self.view = view
+        self.router = router
         self.getCurrentWeatherUseCase = getCurrentWeatherUseCase
     }
 
@@ -30,10 +34,17 @@ final class CurrentWeatherPresenter {
 
                 switch result {
                 case let .success(weather):
-                    self?.view?.display(weather: weather)
+                    let viewModel = CurrentWeatherViewModel(title: LocalizationKeys.resultsTitle,
+                                                            dismissLabel: LocalizationKeys.resultsDismissLabel,
+                                                            locationName: weather.name,
+                                                            locationTemperature: "\(weather.temperature)\(LocalizationKeys.resultsTemperatureSuffix)",
+                                                            locationDescription: weather.description)
+                    
+                    self?.router.displayWeatherResults(weatherViewModel: viewModel)
 
                 case .failure(_):
-                    self?.view?.display(title: LocalizationKeys.errorTitle, error: LocalizationKeys.errorMessage)
+                    self?.router.displayError(title: LocalizationKeys.errorTitle,
+                                              message: LocalizationKeys.errorMessage)
                 }
             }
         }

@@ -40,6 +40,7 @@ extension CurrentWeatherViewController: UISearchBarDelegate {
         }
 
         searchBar.resignFirstResponder()
+        // It should be removed and presenter should be called!!
         createActionSheet()
     }
 }
