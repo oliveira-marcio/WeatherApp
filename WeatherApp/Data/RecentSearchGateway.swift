@@ -17,7 +17,7 @@ protocol RecentSearchGateway {
 
 final class InMemoryRecentSearchGateway: RecentSearchGateway {
     private var queue = DispatchQueue(label: "com.marcio.WeatherApp.InMemoryRecentSearchGateway")
-    private var mapTerms = [String: Int]()
+    private var mapTerms = [String: (String, Int)]()
     private var termIndex = 0
 
     var fetchShouldFail = false
@@ -35,8 +35,8 @@ final class InMemoryRecentSearchGateway: RecentSearchGateway {
             } else {
                 // terms by indexes in reverse order
                 let terms = self.mapTerms
-                    .sorted { $0.1 > $1.1 }
-                    .map { $0.0 }
+                    .sorted { $0.1.1 > $1.1.1 }
+                    .map { $0.1.0 }
                 completion(.success(terms))
             }
         }
@@ -52,7 +52,7 @@ final class InMemoryRecentSearchGateway: RecentSearchGateway {
             if self.insertShouldFail {
                 completion(.unableToInsert)
             } else {
-                self.mapTerms[term] = self.termIndex
+                self.mapTerms[term.lowercased()] = (term, self.termIndex)
                 self.termIndex += 1
                 completion(nil)
             }

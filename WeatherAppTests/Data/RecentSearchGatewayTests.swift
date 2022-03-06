@@ -81,14 +81,14 @@ final class RecentSearchGatewayTests: XCTestCase {
         XCTAssertEqual(actualTerms, expectedTerms)
     }
 
-    func test_GIVEN_entries_stored_WHEN_existing_term_is_inserted_THEN_it_should_not_ne_inserted_again_and_fetchAllTerms_should_return_updated_entries_with_attempted_term_at_first() {
+    func test_GIVEN_entries_stored_WHEN_existing_term_even_in_different_case_is_inserted_THEN_it_should_not_be_inserted_again_and_fetchAllTerms_should_return_updated_entries_with_attempted_term_at_first() {
         let _ = populateSampleData(values: 3)
-        let expectedTerms = ["Term 2", "Term 3", "Term 1"]
+        let expectedTerms = ["teRM 2", "Term 3", "Term 1"]
 
         var actualTerms: [String]?
         let fetchExpectation = expectation(description: "insert and fetch all expectation")
 
-        gateway.insert(term: "Term 2") { [weak self] _ in
+        gateway.insert(term: "teRM 2") { [weak self] _ in
             self?.gateway.fetchAllTerms { result in
                 actualTerms = try? result.get()
                 fetchExpectation.fulfill()
