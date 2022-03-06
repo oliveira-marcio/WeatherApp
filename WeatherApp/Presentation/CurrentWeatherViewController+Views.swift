@@ -66,15 +66,4 @@ extension CurrentWeatherViewController {
             searchBar.trailingAnchor.constraint(equalTo: rootView.trailingAnchor)
         ])
     }
-
-    // It should be removed!!
-    internal func createActionSheet() {
-        let viewModel = CurrentWeatherViewModel(title: CurrentWeatherPresenter.LocalizationKeys.resultsTitle,
-                                                dismissLabel: CurrentWeatherPresenter.LocalizationKeys.resultsDismissLabel,
-                                                locationName: "New York",
-                                                locationTemperature: "15\(CurrentWeatherPresenter.LocalizationKeys.resultsTemperatureSuffix)",
-                                                locationDescription: "Partial Sunny")
-
-        CurrentWeatherRouterImplementation(currentWeatherViewController: self).displayWeatherResults(weatherViewModel: viewModel)
-    }
 }

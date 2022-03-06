@@ -1,6 +1,7 @@
 import UIKit
 
 class CurrentWeatherViewController: UIViewController {
+    var presenter: CurrentWeatherPresenter!
 
     internal lazy var searchBar: UISearchBar = createSearchBar()
     internal lazy var rootView: UIStackView = createRootView()
@@ -10,14 +11,6 @@ class CurrentWeatherViewController: UIViewController {
         super.viewDidLoad()
         setupSubviews()
         setupConstraints()
-
-        // Just to test new mock target and DI
-        SceneDelegate.appEnvironment.domain.getCurrentWeatherUseCase.invoke(query: "Lisbon", completion: { result in
-            switch result {
-            case let .success(weather): print("Weather: \(weather)")
-            case .failure(_): print("Error fetching weather")
-            }
-        })
     }
     
     /**
@@ -33,15 +26,20 @@ class CurrentWeatherViewController: UIViewController {
     }
 }
 
+extension CurrentWeatherViewController: CurrentWeatherView {
+    func display(loading: Bool) {
+
+    }
+}
+
 extension CurrentWeatherViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let _ = searchBar.text else {
+        guard let query = searchBar.text else {
             return
         }
 
         searchBar.resignFirstResponder()
-        // It should be removed and presenter should be called!!
-        createActionSheet()
+        presenter.onSearchButtonTapped(query: query)
     }
 }
 

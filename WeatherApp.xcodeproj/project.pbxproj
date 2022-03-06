@@ -69,6 +69,8 @@
 		9CDA0FB327D5286B008E42F6 /* CurrentWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FB127D5286B008E42F6 /* CurrentWeatherViewModel.swift */; };
 		9CDA0FB427D52BAC008E42F6 /* CurrentWeatherRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FAF27D52427008E42F6 /* CurrentWeatherRouter.swift */; };
 		9CDA0FB627D52E9E008E42F6 /* CurrentWeatherRouterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FB527D52E9E008E42F6 /* CurrentWeatherRouterSpy.swift */; };
+		9CDA0FB927D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FB827D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift */; };
+		9CDA0FBA27D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FB827D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +127,7 @@
 		9CDA0FAF27D52427008E42F6 /* CurrentWeatherRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherRouter.swift; sourceTree = "<group>"; };
 		9CDA0FB127D5286B008E42F6 /* CurrentWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherViewModel.swift; sourceTree = "<group>"; };
 		9CDA0FB527D52E9E008E42F6 /* CurrentWeatherRouterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherRouterSpy.swift; sourceTree = "<group>"; };
+		9CDA0FB827D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherViewConfigurator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +199,7 @@
 			children = (
 				9C722C2E27D3C20A00A0E84D /* CurrentWeatherPresenter.swift */,
 				9CDA0FAF27D52427008E42F6 /* CurrentWeatherRouter.swift */,
+				9CDA0FB827D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift */,
 				9C7E049427CFFBB3007C4CBA /* CurrentWeatherViewController.swift */,
 				9C722C3627D3EE9300A0E84D /* CurrentWeatherViewController+Views.swift */,
 				9CDA0FB127D5286B008E42F6 /* CurrentWeatherViewModel.swift */,
@@ -491,6 +495,7 @@
 				9CDA0FAE27D51E9B008E42F6 /* AppDomain.swift in Sources */,
 				9C722C3D27D42B6F00A0E84D /* CurrentWeatherViewController+Views.swift in Sources */,
 				9C722C3E27D42B6F00A0E84D /* RequestExecutor.swift in Sources */,
+				9CDA0FBA27D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift in Sources */,
 				9C2DD55B27D43C1A009F0775 /* Configuration.swift in Sources */,
 				9C722C3F27D42B6F00A0E84D /* URLSessionProtocol.swift in Sources */,
 				9CDA0FAC27D51E61008E42F6 /* AppEnvironment.swift in Sources */,
@@ -518,6 +523,7 @@
 			files = (
 				9CDA0FB027D52427008E42F6 /* CurrentWeatherRouter.swift in Sources */,
 				9C722C1B27D28ECF00A0E84D /* Weather.swift in Sources */,
+				9CDA0FB927D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift in Sources */,
 				9C722C3727D3EE9300A0E84D /* CurrentWeatherViewController+Views.swift in Sources */,
 				9C722C1427D2869500A0E84D /* RequestExecutor.swift in Sources */,
 				9C722BFD27D1559000A0E84D /* URLSessionProtocol.swift in Sources */,
