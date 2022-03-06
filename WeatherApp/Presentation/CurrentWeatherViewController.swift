@@ -11,10 +11,13 @@ class CurrentWeatherViewController: UIViewController {
         setupSubviews()
         setupConstraints()
 
-        // Just to test new mock target
-        print(DependencyResolver().test)
-        print("BaseURL: \(try! Configuration.baseURL())")
-        print("ApiKey: \(try! Configuration.apiKey())")
+        // Just to test new mock target and DI
+        SceneDelegate.appEnvironment.domain.getCurrentWeatherUseCase.invoke(query: "Lisbon", completion: { result in
+            switch result {
+            case let .success(weather): print("Weather: \(weather)")
+            case .failure(_): print("Error fetching weather")
+            }
+        })
     }
     
     /**

@@ -8,7 +8,7 @@ protocol GetCurrentWeatherUseCaseDependenciesResolvable {
     var weatherGateway: WeatherGateway { get }
 }
 
-final class GetCurrentWeatherUseCaseImplementation {
+final class GetCurrentWeatherUseCaseImplementation: GetCurrentWeatherUseCase {
     private let weatherGateway: WeatherGateway
 
     init(weatherGateway: WeatherGateway) {

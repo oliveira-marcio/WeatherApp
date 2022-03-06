@@ -3,10 +3,13 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    static var appEnvironment: AppEnvironment!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        AppDelegate.appEnvironment = AppEnvironment.bootstrap()
+        
         return true
     }
 
