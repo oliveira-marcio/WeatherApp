@@ -4,8 +4,9 @@ class CurrentWeatherViewController: UIViewController {
     var presenter: CurrentWeatherPresenter!
 
     internal lazy var searchBar: UISearchBar = createSearchBar()
+    internal lazy var tableView: UITableView = createTableView()
+    internal lazy var loadingIndicator: UIActivityIndicatorView = createLoadingIndicator()
     internal lazy var rootView: UIStackView = createRootView()
-    internal lazy var label: UILabel = createTestLebel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,9 @@ class CurrentWeatherViewController: UIViewController {
 
 extension CurrentWeatherViewController: CurrentWeatherView {
     func display(loading: Bool) {
-
+        loadingIndicator.isHidden = !loading
+        tableView.isHidden = loading
+        loading ? loadingIndicator.startAnimating() : loadingIndicator.stopAnimating()
     }
 }
 

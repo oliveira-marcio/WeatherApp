@@ -5,11 +5,11 @@ struct CurrentWeatherViewModel: Equatable {
     let locationTemperature: String
     let locationDescription: String
 
-    public init(title: String,
-                dismissLabel: String,
-                locationName: String,
-                locationTemperature: String,
-                locationDescription: String) {
+    init(title: String,
+         dismissLabel: String,
+         locationName: String,
+         locationTemperature: String,
+         locationDescription: String) {
         self.title = title
         self.dismissLabel = dismissLabel
         self.locationName = locationName

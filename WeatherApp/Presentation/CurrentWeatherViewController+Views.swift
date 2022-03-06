@@ -7,6 +7,7 @@ extension CurrentWeatherViewController {
         static let searchViewBorderWidth: CGFloat = 2
         static let searchViewCornerRadius: CGFloat = 16
         static let searchViewInsets: CGFloat = 8
+        static let loadingIndicatorSize: CGFloat = 42
         static let searchIcon: String = "SearchIcon"
     }
 
@@ -31,23 +32,28 @@ extension CurrentWeatherViewController {
         return bar
     }
 
-    internal func createRootView() -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [searchBar, label])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.setCustomSpacing(Constants.defaultSpacing, after: searchBar)
-        stackView.alignment = .center
-        stackView.axis = .vertical
-        return stackView
+    func createTableView() -> UITableView{
+        let table = UITableView()
+        return table
     }
 
-    internal func createTestLebel() -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .preferredFont(forTextStyle: .title1)
-        label.text = NSLocalizedString("label", comment: "")
-        label.isUserInteractionEnabled = true
-        label.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        return label
+    func createLoadingIndicator() -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isHidden = true
+        activityIndicator.frame = CGRect(x: 0,
+                                         y: 0,
+                                         width: Constants.loadingIndicatorSize,
+                                         height: Constants.loadingIndicatorSize)
+        return activityIndicator
+    }
+
+    internal func createRootView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [searchBar, tableView, loadingIndicator])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.setCustomSpacing(Constants.defaultSpacing, after: searchBar)
+        stackView.axis = .vertical
+        return stackView
     }
 
     internal func setupSubviews() {

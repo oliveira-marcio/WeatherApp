@@ -4,11 +4,12 @@ import Foundation
 final class MockWeatherGateway: WeatherGateway {
     var queue = DispatchQueue(label: "com.marcio.WeatherApp.MockWeatherGateway")
 
-    var fetchCurrentWeatherDelay = 0
+    var fetchCurrentWeatherDelay: Int
     var fetchCurrentWeatherQueue = MockResultQueue<Weather, WeatherError>()
     var query: String?
 
     init() {
+        fetchCurrentWeatherDelay = 1
         fetchCurrentWeatherQueue.set(.success(.nyDummy))
     }
 

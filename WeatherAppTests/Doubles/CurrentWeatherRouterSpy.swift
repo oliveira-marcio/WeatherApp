@@ -2,8 +2,7 @@
 
 final class CurrentWeatherRouterSpy: CurrentWeatherRouter {
     var weatherViewModel: CurrentWeatherViewModel?
-    var errorTitle: String?
-    var errorMessage: String?
+    var errorViewModel: ErrorViewModel?
 
     var displayWeatherCompletion: (() -> ())?
     var displayErrorCompletion: (() -> ())?
@@ -13,9 +12,8 @@ final class CurrentWeatherRouterSpy: CurrentWeatherRouter {
         displayWeatherCompletion?()
     }
 
-    func displayError(title: String, message: String) {
-        errorTitle = title
-        errorMessage = message
+    func displayError(errorViewModel: ErrorViewModel) {
+        self.errorViewModel = errorViewModel
         displayErrorCompletion?()
     }
 }

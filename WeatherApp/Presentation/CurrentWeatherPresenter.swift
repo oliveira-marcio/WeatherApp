@@ -9,6 +9,7 @@ final class CurrentWeatherPresenter {
     enum LocalizationKeys {
         static let errorTitle = NSLocalizedString("WeatherRequestFailTitle", comment: "")
         static let errorMessage = NSLocalizedString("WeatherRequestFailMessage", comment: "")
+        static let errorDismiss = NSLocalizedString("WeatherRequestFailDismiss", comment: "")
         static let resultsTitle = NSLocalizedString("WeatherResultsTitle", comment: "")
         static let resultsTemperatureSuffix = NSLocalizedString("WeatherResultsTemperatureSuffix", comment: "")
         static let resultsDismissLabel = NSLocalizedString("WeatherResultsDismissLabel", comment: "")
@@ -43,8 +44,11 @@ final class CurrentWeatherPresenter {
                     self?.router.displayWeatherResults(weatherViewModel: viewModel)
 
                 case .failure(_):
-                    self?.router.displayError(title: LocalizationKeys.errorTitle,
-                                              message: LocalizationKeys.errorMessage)
+                    let viewModel = ErrorViewModel(title: LocalizationKeys.errorTitle,
+                                                   message: LocalizationKeys.errorMessage,
+                                                   dismiss: LocalizationKeys.errorDismiss)
+
+                    self?.router.displayError(errorViewModel: viewModel)
                 }
             }
         }

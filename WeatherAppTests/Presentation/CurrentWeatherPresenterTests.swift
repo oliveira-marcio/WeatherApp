@@ -40,8 +40,7 @@ final class CurrentWeatherPresenterTests: XCTestCase {
 
         XCTAssertEqual(router.weatherViewModel, .stub(from: .nyDummy))
         XCTAssertEqual(view.loadingCalls, [true, false])
-        XCTAssertNil(router.errorTitle)
-        XCTAssertNil(router.errorMessage)
+        XCTAssertNil(router.errorViewModel)
     }
 
     func test_GIVEN_query_WHEN_search_button_is_tapped_and_request_fails_THEN_it_should_display_and_dide_loading_and_display_error() {
@@ -57,8 +56,7 @@ final class CurrentWeatherPresenterTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
 
-        XCTAssertEqual(router.errorTitle, CurrentWeatherPresenter.LocalizationKeys.errorTitle)
-        XCTAssertEqual(router.errorMessage, CurrentWeatherPresenter.LocalizationKeys.errorMessage)
+        XCTAssertEqual(router.errorViewModel, .dummy)
         XCTAssertEqual(view.loadingCalls, [true, false])
         XCTAssertNil(router.weatherViewModel)
     }

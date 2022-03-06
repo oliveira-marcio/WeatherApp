@@ -71,6 +71,8 @@
 		9CDA0FB627D52E9E008E42F6 /* CurrentWeatherRouterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FB527D52E9E008E42F6 /* CurrentWeatherRouterSpy.swift */; };
 		9CDA0FB927D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FB827D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift */; };
 		9CDA0FBA27D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FB827D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift */; };
+		9CDA0FBC27D54192008E42F6 /* ErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FBB27D54192008E42F6 /* ErrorViewModel.swift */; };
+		9CDA0FBD27D54192008E42F6 /* ErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FBB27D54192008E42F6 /* ErrorViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +130,7 @@
 		9CDA0FB127D5286B008E42F6 /* CurrentWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherViewModel.swift; sourceTree = "<group>"; };
 		9CDA0FB527D52E9E008E42F6 /* CurrentWeatherRouterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherRouterSpy.swift; sourceTree = "<group>"; };
 		9CDA0FB827D5365A008E42F6 /* CurrentWeatherViewConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherViewConfigurator.swift; sourceTree = "<group>"; };
+		9CDA0FBB27D54192008E42F6 /* ErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +206,7 @@
 				9C7E049427CFFBB3007C4CBA /* CurrentWeatherViewController.swift */,
 				9C722C3627D3EE9300A0E84D /* CurrentWeatherViewController+Views.swift */,
 				9CDA0FB127D5286B008E42F6 /* CurrentWeatherViewModel.swift */,
+				9CDA0FBB27D54192008E42F6 /* ErrorViewModel.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -499,6 +503,7 @@
 				9C2DD55B27D43C1A009F0775 /* Configuration.swift in Sources */,
 				9C722C3F27D42B6F00A0E84D /* URLSessionProtocol.swift in Sources */,
 				9CDA0FAC27D51E61008E42F6 /* AppEnvironment.swift in Sources */,
+				9CDA0FBD27D54192008E42F6 /* ErrorViewModel.swift in Sources */,
 				9C722C5827D42D2F00A0E84D /* DependencyResolver+Mock.swift in Sources */,
 				9CDA0FAD27D51E7F008E42F6 /* DependencyResolvable.swift in Sources */,
 				9C2DD55527D43A0A009F0775 /* Dummies.swift in Sources */,
@@ -542,6 +547,7 @@
 				9C722C5527D42D1800A0E84D /* DependencyResolver.swift in Sources */,
 				9C722C2427D3B1F500A0E84D /* GetCurrentWeatherUseCase.swift in Sources */,
 				9CDA0FA827D515A2008E42F6 /* AppEnvironment.swift in Sources */,
+				9CDA0FBC27D54192008E42F6 /* ErrorViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

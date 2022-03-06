@@ -15,3 +15,9 @@ extension CurrentWeatherViewModel {
                                 locationDescription: weather.description)
     }
 }
+
+extension ErrorViewModel {
+    static let dummy = ErrorViewModel(title: CurrentWeatherPresenter.LocalizationKeys.errorTitle,
+                                      message: CurrentWeatherPresenter.LocalizationKeys.errorMessage,
+                                      dismiss: CurrentWeatherPresenter.LocalizationKeys.errorDismiss)
+}

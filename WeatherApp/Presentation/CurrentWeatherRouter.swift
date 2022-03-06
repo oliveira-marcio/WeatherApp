@@ -3,7 +3,7 @@ import UIKit
 
 protocol CurrentWeatherRouter {
     func displayWeatherResults(weatherViewModel: CurrentWeatherViewModel)
-    func displayError(title: String, message: String)
+    func displayError(errorViewModel: ErrorViewModel)
 }
 
 final class CurrentWeatherRouterImplementation: CurrentWeatherRouter {
@@ -36,7 +36,13 @@ final class CurrentWeatherRouterImplementation: CurrentWeatherRouter {
         return action
     }
 
-    func displayError(title: String, message: String) {
+    func displayError(errorViewModel: ErrorViewModel) {
+        let alertController = UIAlertController(title: errorViewModel.title,
+                                                message: errorViewModel.message,
+                                                preferredStyle: .alert)
 
+        alertController.addAction(UIAlertAction(title: errorViewModel.dismiss, style: .cancel))
+
+        currentWeatherViewController?.present(alertController, animated: true)
     }
 }
