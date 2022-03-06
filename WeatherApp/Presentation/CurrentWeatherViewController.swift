@@ -10,6 +10,11 @@ class CurrentWeatherViewController: UIViewController {
         super.viewDidLoad()
         setupSubviews()
         setupConstraints()
+
+        // Just to test new mock target
+        print(DependencyResolver().test)
+        print("BaseURL: \(try! Configuration.baseURL())")
+        print("ApiKey: \(try! Configuration.apiKey())")
     }
     
     /**

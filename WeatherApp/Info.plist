@@ -19,5 +19,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>weather_api_base_url</key>
+	<string>${weather_api_base_url}</string>
+	<key>weather_api_api_key</key>
+	<string>${weather_api_api_key}</string>
 </dict>
 </plist>

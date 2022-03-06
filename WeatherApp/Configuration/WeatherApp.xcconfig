@@ -1,0 +1,4 @@
+#include? "Secrets.xcconfig"
+
+weather_api_base_url = api.weatherstack.com
+weather_api_api_key = $(weather_api_api_key)

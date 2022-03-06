@@ -26,3 +26,5 @@ xcuserdata/
 timeline.xctimeline
 playground.xcworkspace
 
+WeatherApp/Configuration/Secrets.xcconfig
+
