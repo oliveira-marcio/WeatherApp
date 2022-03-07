@@ -76,6 +76,14 @@
 		9CDA0FBF27D54635008E42F6 /* RecentSearchGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FBE27D54635008E42F6 /* RecentSearchGateway.swift */; };
 		9CDA0FC027D54635008E42F6 /* RecentSearchGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FBE27D54635008E42F6 /* RecentSearchGateway.swift */; };
 		9CDA0FC327D5485E008E42F6 /* RecentSearchGatewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FC227D5485E008E42F6 /* RecentSearchGatewayTests.swift */; };
+		9CDA0FC527D57C84008E42F6 /* MockRecentSearchGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FC427D57C84008E42F6 /* MockRecentSearchGateway.swift */; };
+		9CDA0FC627D57C8C008E42F6 /* MockRecentSearchGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FC427D57C84008E42F6 /* MockRecentSearchGateway.swift */; };
+		9CDA0FC827D58208008E42F6 /* SaveSearchTermUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FC727D58208008E42F6 /* SaveSearchTermUseCase.swift */; };
+		9CDA0FC927D58208008E42F6 /* SaveSearchTermUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FC727D58208008E42F6 /* SaveSearchTermUseCase.swift */; };
+		9CDA0FCC27D58356008E42F6 /* SaveSearchTermUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FCB27D58356008E42F6 /* SaveSearchTermUseCaseTests.swift */; };
+		9CDA0FCE27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FCD27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift */; };
+		9CDA0FCF27D589F7008E42F6 /* GetRecentSearchTermsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FCD27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift */; };
+		9CDA0FD127D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FD027D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +144,11 @@
 		9CDA0FBB27D54192008E42F6 /* ErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModel.swift; sourceTree = "<group>"; };
 		9CDA0FBE27D54635008E42F6 /* RecentSearchGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchGateway.swift; sourceTree = "<group>"; };
 		9CDA0FC227D5485E008E42F6 /* RecentSearchGatewayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchGatewayTests.swift; sourceTree = "<group>"; };
+		9CDA0FC427D57C84008E42F6 /* MockRecentSearchGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecentSearchGateway.swift; sourceTree = "<group>"; };
+		9CDA0FC727D58208008E42F6 /* SaveSearchTermUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSearchTermUseCase.swift; sourceTree = "<group>"; };
+		9CDA0FCB27D58356008E42F6 /* SaveSearchTermUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSearchTermUseCaseTests.swift; sourceTree = "<group>"; };
+		9CDA0FCD27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecentSearchTermsUseCase.swift; sourceTree = "<group>"; };
+		9CDA0FD027D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecentSearchTermsUseCaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +179,7 @@
 		9C2DD55727D43AA8009F0775 /* Tests+Mock */ = {
 			isa = PBXGroup;
 			children = (
+				9CDA0FC427D57C84008E42F6 /* MockRecentSearchGateway.swift */,
 				9C722C2727D3B6EA00A0E84D /* MockWeatherGateway.swift */,
 			);
 			path = "Tests+Mock";
@@ -185,8 +199,10 @@
 			isa = PBXGroup;
 			children = (
 				9CDA0FAB27D51705008E42F6 /* Configuration */,
+				9CDA0FCA27D58210008E42F6 /* Models */,
 				9C722C2327D3B1F500A0E84D /* GetCurrentWeatherUseCase.swift */,
-				9C722C1A27D28ECF00A0E84D /* Weather.swift */,
+				9CDA0FCD27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift */,
+				9CDA0FC727D58208008E42F6 /* SaveSearchTermUseCase.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -240,6 +256,8 @@
 			isa = PBXGroup;
 			children = (
 				9C722C2527D3B64700A0E84D /* GetCurrentWeatherUseCaseTests.swift */,
+				9CDA0FD027D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift */,
+				9CDA0FCB27D58356008E42F6 /* SaveSearchTermUseCaseTests.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -350,6 +368,14 @@
 				9C2DD54B27D435EF009F0775 /* DependencyResolvable.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		9CDA0FCA27D58210008E42F6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9C722C1A27D28ECF00A0E84D /* Weather.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -485,12 +511,15 @@
 				9C722C1F27D2A11B00A0E84D /* URLSessionStub.swift in Sources */,
 				9C722C3127D3C87400A0E84D /* CurrentWeatherPresenterTests.swift in Sources */,
 				9C722C2D27D3C06100A0E84D /* Dummies.swift in Sources */,
+				9CDA0FD127D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift in Sources */,
 				9C722C2B27D3BBEA00A0E84D /* MockQueue.swift in Sources */,
+				9CDA0FCC27D58356008E42F6 /* SaveSearchTermUseCaseTests.swift in Sources */,
 				9C722C3327D3C8AC00A0E84D /* FakeGetCurrentWeatherUseCase.swift in Sources */,
 				9C722C0D27D158E500A0E84D /* WeatherAPIRequestsTests.swift in Sources */,
 				9C722C2627D3B64700A0E84D /* GetCurrentWeatherUseCaseTests.swift in Sources */,
 				9C722C2127D2ACD700A0E84D /* RequestExecutorTests.swift in Sources */,
 				9C722C1727D28B4900A0E84D /* RequestExecutorSpy.swift in Sources */,
+				9CDA0FC527D57C84008E42F6 /* MockRecentSearchGateway.swift in Sources */,
 				9CDA0FC327D5485E008E42F6 /* RecentSearchGatewayTests.swift in Sources */,
 				9C722C2827D3B6EA00A0E84D /* MockWeatherGateway.swift in Sources */,
 				9CDA0FB627D52E9E008E42F6 /* CurrentWeatherRouterSpy.swift in Sources */,
@@ -502,6 +531,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CDA0FC927D58208008E42F6 /* SaveSearchTermUseCase.swift in Sources */,
 				9C722C3C27D42B6F00A0E84D /* Weather.swift in Sources */,
 				9CDA0FC027D54635008E42F6 /* RecentSearchGateway.swift in Sources */,
 				9CDA0FB427D52BAC008E42F6 /* CurrentWeatherRouter.swift in Sources */,
@@ -515,7 +545,9 @@
 				9CDA0FBD27D54192008E42F6 /* ErrorViewModel.swift in Sources */,
 				9C722C5827D42D2F00A0E84D /* DependencyResolver+Mock.swift in Sources */,
 				9CDA0FAD27D51E7F008E42F6 /* DependencyResolvable.swift in Sources */,
+				9CDA0FC627D57C8C008E42F6 /* MockRecentSearchGateway.swift in Sources */,
 				9C2DD55527D43A0A009F0775 /* Dummies.swift in Sources */,
+				9CDA0FCF27D589F7008E42F6 /* GetRecentSearchTermsUseCase.swift in Sources */,
 				9C722C4027D42B6F00A0E84D /* CurrentWeatherViewController.swift in Sources */,
 				9C722C4127D42B6F00A0E84D /* WeatherEntity.swift in Sources */,
 				9C722C4227D42B6F00A0E84D /* CurrentWeatherPresenter.swift in Sources */,
@@ -545,8 +577,10 @@
 				9C7E049527CFFBB3007C4CBA /* CurrentWeatherViewController.swift in Sources */,
 				9C722C1D27D2936800A0E84D /* WeatherEntity.swift in Sources */,
 				9CDA0FB227D5286B008E42F6 /* CurrentWeatherViewModel.swift in Sources */,
+				9CDA0FCE27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift in Sources */,
 				9C2DD55A27D43C1A009F0775 /* Configuration.swift in Sources */,
 				9C722C2F27D3C20A00A0E84D /* CurrentWeatherPresenter.swift in Sources */,
+				9CDA0FC827D58208008E42F6 /* SaveSearchTermUseCase.swift in Sources */,
 				9C722BFB27D1546200A0E84D /* WeatherAPI.swift in Sources */,
 				9C7E049127CFFBB3007C4CBA /* AppDelegate.swift in Sources */,
 				9C7E049327CFFBB3007C4CBA /* SceneDelegate.swift in Sources */,
