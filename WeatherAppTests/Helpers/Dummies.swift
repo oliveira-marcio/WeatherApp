@@ -21,3 +21,9 @@ extension ErrorViewModel {
                                       message: CurrentWeatherPresenter.LocalizationKeys.errorMessage,
                                       dismiss: CurrentWeatherPresenter.LocalizationKeys.errorDismiss)
 }
+
+extension RecentSearchTermViewModel {
+    static func stubList(from terms: [String]) -> [RecentSearchTermViewModel] {
+        terms.map { RecentSearchTermViewModel(term: $0)}
+    }
+}

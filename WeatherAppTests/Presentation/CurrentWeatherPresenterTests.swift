@@ -47,7 +47,7 @@ final class CurrentWeatherPresenterTests: XCTestCase {
 
         waitForExpectations(timeout: 1)
 
-        XCTAssertEqual(view.recentTerms, recentTerms)
+        XCTAssertEqual(view.recentTerms, RecentSearchTermViewModel.stubList(from: recentTerms))
     }
 
     func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_display_and_hide_loading_and_display_current_weather() {
@@ -83,7 +83,7 @@ final class CurrentWeatherPresenterTests: XCTestCase {
         waitForExpectations(timeout: 1)
 
         XCTAssertEqual(saveSearchTermUseCase.term, "New York")
-        XCTAssertEqual(view.recentTerms, recentTerms)
+        XCTAssertEqual(view.recentTerms, RecentSearchTermViewModel.stubList(from: recentTerms))
     }
 
     func test_GIVEN_query_WHEN_search_button_is_tapped_and_request_fails_THEN_it_should_display_and_hide_loading_and_display_error() {

@@ -5,8 +5,14 @@ class CurrentWeatherViewController: UIViewController {
 
     internal lazy var searchBar: UISearchBar = createSearchBar()
     internal lazy var tableView: UITableView = createTableView()
+    internal lazy var dataSource: DataSource = createDataSource()
     internal lazy var loadingIndicator: UIActivityIndicatorView = createLoadingIndicator()
     internal lazy var rootView: UIStackView = createRootView()
+
+    typealias DataSource = UITableViewDiffableDataSource<Section, RecentSearchTermViewModel>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, RecentSearchTermViewModel>
+
+    enum Section { case main }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +42,11 @@ extension CurrentWeatherViewController: CurrentWeatherView {
         loading ? loadingIndicator.startAnimating() : loadingIndicator.stopAnimating()
     }
 
-    func display(recentTerms: [String]) {
-        print(recentTerms)
+    func display(recentTerms: [RecentSearchTermViewModel]) {
+        var snapShot = Snapshot()
+        snapShot.appendSections([.main])
+        snapShot.appendItems(recentTerms)
+        dataSource.apply(snapShot, animatingDifferences: true)
     }
 }
 

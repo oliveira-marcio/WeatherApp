@@ -86,6 +86,8 @@
 		9CDA0FD127D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FD027D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift */; };
 		9CDA0FD327D593CB008E42F6 /* FakeGetRecentSearchTermsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FD227D593CB008E42F6 /* FakeGetRecentSearchTermsUseCase.swift */; };
 		9CDA0FD527D593E3008E42F6 /* FakeSaveSearchTermUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FD427D593E3008E42F6 /* FakeSaveSearchTermUseCase.swift */; };
+		9CDA0FD727D61C5E008E42F6 /* RecentSearchTermViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FD627D61C5E008E42F6 /* RecentSearchTermViewModel.swift */; };
+		9CDA0FD827D61C5E008E42F6 /* RecentSearchTermViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FD627D61C5E008E42F6 /* RecentSearchTermViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +155,7 @@
 		9CDA0FD027D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecentSearchTermsUseCaseTests.swift; sourceTree = "<group>"; };
 		9CDA0FD227D593CB008E42F6 /* FakeGetRecentSearchTermsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeGetRecentSearchTermsUseCase.swift; sourceTree = "<group>"; };
 		9CDA0FD427D593E3008E42F6 /* FakeSaveSearchTermUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSaveSearchTermUseCase.swift; sourceTree = "<group>"; };
+		9CDA0FD627D61C5E008E42F6 /* RecentSearchTermViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchTermViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +236,7 @@
 				9C722C3627D3EE9300A0E84D /* CurrentWeatherViewController+Views.swift */,
 				9CDA0FB127D5286B008E42F6 /* CurrentWeatherViewModel.swift */,
 				9CDA0FBB27D54192008E42F6 /* ErrorViewModel.swift */,
+				9CDA0FD627D61C5E008E42F6 /* RecentSearchTermViewModel.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -550,6 +554,7 @@
 				9C2DD55B27D43C1A009F0775 /* Configuration.swift in Sources */,
 				9C722C3F27D42B6F00A0E84D /* URLSessionProtocol.swift in Sources */,
 				9CDA0FAC27D51E61008E42F6 /* AppEnvironment.swift in Sources */,
+				9CDA0FD827D61C5E008E42F6 /* RecentSearchTermViewModel.swift in Sources */,
 				9CDA0FBD27D54192008E42F6 /* ErrorViewModel.swift in Sources */,
 				9C722C5827D42D2F00A0E84D /* DependencyResolver+Mock.swift in Sources */,
 				9CDA0FAD27D51E7F008E42F6 /* DependencyResolvable.swift in Sources */,
@@ -586,6 +591,7 @@
 				9C722C1D27D2936800A0E84D /* WeatherEntity.swift in Sources */,
 				9CDA0FB227D5286B008E42F6 /* CurrentWeatherViewModel.swift in Sources */,
 				9CDA0FCE27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift in Sources */,
+				9CDA0FD727D61C5E008E42F6 /* RecentSearchTermViewModel.swift in Sources */,
 				9C2DD55A27D43C1A009F0775 /* Configuration.swift in Sources */,
 				9C722C2F27D3C20A00A0E84D /* CurrentWeatherPresenter.swift in Sources */,
 				9CDA0FC827D58208008E42F6 /* SaveSearchTermUseCase.swift in Sources */,

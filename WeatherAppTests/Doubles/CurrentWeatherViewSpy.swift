@@ -3,7 +3,7 @@
 final class CurrentWeatherViewSpy: CurrentWeatherView {
     var presenter: CurrentWeatherPresenter!
     var loadingCalls = [Bool]()
-    var recentTerms: [String]?
+    var recentTerms: [RecentSearchTermViewModel]?
 
     var displayRecentTermsCompletion: (() -> ())?
 
@@ -11,7 +11,7 @@ final class CurrentWeatherViewSpy: CurrentWeatherView {
         loadingCalls.append(loading)
     }
 
-    func display(recentTerms: [String]) {
+    func display(recentTerms: [RecentSearchTermViewModel]) {
         self.recentTerms = recentTerms
         displayRecentTermsCompletion?()
     }

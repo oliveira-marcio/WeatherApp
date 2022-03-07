@@ -8,7 +8,8 @@ extension CurrentWeatherViewController {
         static let searchViewCornerRadius: CGFloat = 16
         static let searchViewInsets: CGFloat = 8
         static let loadingIndicatorSize: CGFloat = 42
-        static let searchIcon: String = "SearchIcon"
+        static let recentIcon: String = "ic_history"
+        static let recentSearchTermCellId: String = "recent_search_term_cell"
     }
 
     private enum AccessibilityIdentifiers {
@@ -34,7 +35,23 @@ extension CurrentWeatherViewController {
 
     func createTableView() -> UITableView{
         let table = UITableView()
+        table.register(UITableViewCell.self, forCellReuseIdentifier: Constants.recentSearchTermCellId)
+        table.backgroundColor = .clear
+        table.separatorStyle = .none
         return table
+    }
+
+    func createDataSource() -> DataSource {
+        DataSource(tableView: tableView) { tableView, indexPath, viewModel -> UITableViewCell? in
+            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: Constants.recentSearchTermCellId,
+                                                                      for: indexPath)
+
+            cell.textLabel?.text = viewModel.term
+            cell.imageView?.image = UIImage(named: Constants.recentIcon)
+            cell.imageView?.tintColor = UIColor.dynamicColor(light: .black, dark: .white)
+            cell.selectionStyle = .none
+            return cell
+        }
     }
 
     func createLoadingIndicator() -> UIActivityIndicatorView {

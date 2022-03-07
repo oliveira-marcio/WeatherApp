@@ -3,7 +3,7 @@ import Foundation
 protocol CurrentWeatherView: AnyObject {
     var presenter: CurrentWeatherPresenter! { get set }
     func display(loading: Bool)
-    func display(recentTerms: [String])
+    func display(recentTerms: [RecentSearchTermViewModel])
 }
 
 final class CurrentWeatherPresenter {
@@ -76,7 +76,7 @@ final class CurrentWeatherPresenter {
         getRecentSearchTermsUseCase.invoke { [weak self] result in
             DispatchQueue.main.async {
                 if let recentTerms = try? result.get() {
-                    self?.view?.display(recentTerms: recentTerms)
+                    self?.view?.display(recentTerms: recentTerms.map { RecentSearchTermViewModel(term: $0) })
                 }
             }
         }
