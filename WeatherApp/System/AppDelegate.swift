@@ -7,6 +7,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        if CommandLine.arguments.contains("ui-testing-mock") {
+            UIView.setAnimationsEnabled(false)
+
+            #if targetEnvironment(simulator)
+            let setHardwareLayout = NSSelectorFromString("setHardwareLayout:")
+            UITextInputMode.activeInputModes
+                .filter { $0.responds(to: setHardwareLayout) }
+                .forEach { $0.perform(setHardwareLayout, with: nil) }
+            #endif
+        }
 
         AppDelegate.appEnvironment = AppEnvironment.bootstrap()
         

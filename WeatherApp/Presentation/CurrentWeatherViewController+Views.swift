@@ -9,13 +9,12 @@ extension CurrentWeatherViewController {
         static let searchViewInsets: CGFloat = 8
         static let loadingIndicatorSize: CGFloat = 42
         static let recentIcon: String = "ic_history"
-        static let recentSearchTermCellId: String = "recent_search_term_cell"
     }
 
     private enum AccessibilityIdentifiers {
-        static let searchTextView: String = "search_text_view"
-        static let searchButton: String = "search_button"
         static let currentWeatherScene: String = "current_weather_scene"
+        static let recentSearchTermList: String = "recent_search_term_list"
+        static let recentSearchTermCellId: String = "recent_search_term_cell"
     }
 
     internal func createSearchBar() -> UISearchBar {
@@ -35,7 +34,8 @@ extension CurrentWeatherViewController {
 
     func createTableView() -> UITableView{
         let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: Constants.recentSearchTermCellId)
+        table.accessibilityIdentifier = AccessibilityIdentifiers.recentSearchTermList
+        table.register(UITableViewCell.self, forCellReuseIdentifier: AccessibilityIdentifiers.recentSearchTermCellId)
         table.backgroundColor = .clear
         table.separatorStyle = .none
         table.delegate = self
@@ -44,7 +44,7 @@ extension CurrentWeatherViewController {
 
     func createDataSource() -> DataSource {
         DataSource(tableView: tableView) { tableView, indexPath, viewModel -> UITableViewCell? in
-            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: Constants.recentSearchTermCellId,
+            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: AccessibilityIdentifiers.recentSearchTermCellId,
                                                                       for: indexPath)
 
             cell.textLabel?.text = viewModel.term
