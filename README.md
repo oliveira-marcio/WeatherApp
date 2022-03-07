@@ -1,6 +1,6 @@
 # WeatherApp
 
-Weather App for iOS - Small iOS app made with Swift and UIKit and based on Clean Architecture using https://openweathermap.org/api.
+Weather App for iOS - Small iOS app made with Swift and UIKit, based on [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html), and using [Weatherstack API](https://weatherstack.com/).
 
 ## Features
 - Fetches current weather for a location using a query search
@@ -13,13 +13,13 @@ Weather App for iOS - Small iOS app made with Swift and UIKit and based on Clean
   - Unit tests
   - Component tests (basically presenter tests with real domain dependencies, except for the gateways, views, and routers)
   - UI tests
-- Based on architectures like VIPER and CleanSwift, with the following layers
+- Based on architectures like [VIPER](https://www.raywenderlich.com/8440907-getting-started-with-the-viper-architecture-pattern) and [Clean Swift](https://clean-swift.com/), with the following layers
   - Domain (Use cases, a.k.a, interactors)
   - Data (Gateways for API and DB)
   - Presentation (Presenter, Views, ViewModels, and Router, using an MVP approach)
 
 ## Things to improve
-- Should implement a real DB with CoreData for persisting the recent search terms (currently uses an in-memory DB)
+- Should implement a real DB with CoreData for persisting the recent search terms (currently using an in-memory DB)
 - Project should be modularized in packages, so unit tests can run in a MacOS target without simulators 
 - UI with SwiftUI, so we'll have live preview and less boilerplate
 - Structured concurrency with async/await to replace verbose completions
