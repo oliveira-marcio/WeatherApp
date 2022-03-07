@@ -1,18 +1,18 @@
 import Foundation
 @testable import WeatherApp
 
-public final class URLSessionStub: URLSessionProtocol {
-    public typealias URLSessionCompletionHandlerResponse = (data: Data?, response: URLResponse?, error: Error?)
+final class URLSessionStub: URLSessionProtocol {
+    typealias URLSessionCompletionHandlerResponse = (data: Data?, response: URLResponse?, error: Error?)
 
     var responses = [URLSessionCompletionHandlerResponse]()
 
-    public init() {}
+    init() {}
 
-    public func enqueue(response: URLSessionCompletionHandlerResponse) {
+    func enqueue(response: URLSessionCompletionHandlerResponse) {
         responses.append(response)
     }
 
-    public func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
         guard let firstResponse = responses.first else {
             return StubTask(response: nil, completionHandler: completionHandler)
         }
@@ -30,13 +30,13 @@ public final class URLSessionStub: URLSessionProtocol {
             self.completionHandler = completionHandler
         }
 
-        override public func resume() {
+        override func resume() {
             completionHandler(testDoubleResponse?.data, testDoubleResponse?.response, testDoubleResponse?.error)
         }
     }
 }
 
-public extension HTTPURLResponse {
+extension HTTPURLResponse {
     convenience init(statusCode: Int) {
         self.init(url: URL(string: "https://www.foo.com")!,
                   statusCode: statusCode,

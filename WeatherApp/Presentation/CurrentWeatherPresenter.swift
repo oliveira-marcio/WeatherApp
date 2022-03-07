@@ -3,6 +3,7 @@ import Foundation
 protocol CurrentWeatherView: AnyObject {
     var presenter: CurrentWeatherPresenter! { get set }
     func display(loading: Bool)
+    func display(recentTerms: [String])
 }
 
 final class CurrentWeatherPresenter {
@@ -18,13 +19,29 @@ final class CurrentWeatherPresenter {
     private weak var view: CurrentWeatherView?
     private let router: CurrentWeatherRouter
     private let getCurrentWeatherUseCase: GetCurrentWeatherUseCase
+    private let getRecentSearchTermsUseCase: GetRecentSearchTermsUseCase
+    private let saveSearchTermUseCase: SaveSearchTermUseCase
 
     init(view: CurrentWeatherView,
          router: CurrentWeatherRouter,
-         getCurrentWeatherUseCase: GetCurrentWeatherUseCase) {
+         getCurrentWeatherUseCase: GetCurrentWeatherUseCase,
+         getRecentSearchTermsUseCase: GetRecentSearchTermsUseCase,
+         saveSearchTermUseCase: SaveSearchTermUseCase) {
         self.view = view
         self.router = router
         self.getCurrentWeatherUseCase = getCurrentWeatherUseCase
+        self.getRecentSearchTermsUseCase = getRecentSearchTermsUseCase
+        self.saveSearchTermUseCase = saveSearchTermUseCase
+    }
+
+    func viewDidLoad() {
+        getRecentSearchTermsUseCase.invoke { [weak self] result in
+            DispatchQueue.main.async {
+                if let recentTerms = try? result.get() {
+                    self?.view?.display(recentTerms: recentTerms)
+                }
+            }
+        }
     }
 
     func onSearchButtonTapped(query: String) {

@@ -1,6 +1,6 @@
 import Foundation
 
-public enum WeatherError: Error {
+enum WeatherError: Error {
     case operationFailed
 }
 

@@ -12,6 +12,8 @@ class CurrentWeatherViewController: UIViewController {
         super.viewDidLoad()
         setupSubviews()
         setupConstraints()
+
+        presenter.viewDidLoad()
     }
     
     /**
@@ -32,6 +34,10 @@ extension CurrentWeatherViewController: CurrentWeatherView {
         loadingIndicator.isHidden = !loading
         tableView.isHidden = loading
         loading ? loadingIndicator.startAnimating() : loadingIndicator.stopAnimating()
+    }
+
+    func display(recentTerms: [String]) {
+        print(recentTerms)
     }
 }
 

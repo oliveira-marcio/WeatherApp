@@ -1,6 +1,6 @@
 import Foundation
 
-public struct WeatherAPI {
+struct WeatherAPI {
     struct GetCurrentWeatherRequest: URLRequestable {
 
         private let url: URL!

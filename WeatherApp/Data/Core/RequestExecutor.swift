@@ -1,10 +1,10 @@
 import Foundation
 
-public protocol RequestExecutor {
+protocol RequestExecutor {
     func execute<T>(request: URLRequestable, completion: @escaping (Result<T, ApiError>) -> Void) where T: Decodable
 }
 
-public enum ApiError: Error, Equatable {
+enum ApiError: Error, Equatable {
     case operationFailed(String)
     case parseError(String)
 }

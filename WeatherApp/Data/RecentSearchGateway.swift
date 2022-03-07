@@ -1,6 +1,6 @@
 import Foundation
 
-public enum RecentSearchError: Error {
+enum RecentSearchError: Error {
     case unableToFetch
     case unableToInsert
 }

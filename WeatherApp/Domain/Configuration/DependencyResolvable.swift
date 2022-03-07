@@ -1,1 +1,4 @@
-typealias DependencyResolvable = GetCurrentWeatherUseCaseDependenciesResolvable
+typealias DependencyResolvable
+    = GetCurrentWeatherUseCaseDependenciesResolvable
+    & GetRecentSearchTermsUseCaseDependenciesResolvable
+    & SaveSearchTermUseCaseDependenciesResolvable

@@ -9,7 +9,7 @@ import Foundation
  *
  * e.g.: `[.success(Contact()), .failure(.networkError), .success(Contact()), .failure(.operationFailed)]`
  */
-public class MockResultQueue<ResultSuccess, ResultError: Error>: MockQueue<Result<ResultSuccess, ResultError>> {
+class MockResultQueue<ResultSuccess, ResultError: Error>: MockQueue<Result<ResultSuccess, ResultError>> {
     init(_ queue: Result<ResultSuccess, ResultError>...) {
         super.init(queue)
     }
@@ -22,7 +22,7 @@ public class MockResultQueue<ResultSuccess, ResultError: Error>: MockQueue<Resul
  *
  * e.g.: `[.networkError, nil, nil, .operationFailed]`
  */
-public class MockErrorQueue<ResultError: Error>: MockQueue<ResultError?> {
+class MockErrorQueue<ResultError: Error>: MockQueue<ResultError?> {
     init(_ queue: ResultError?...) {
         super.init(queue)
     }
@@ -40,28 +40,28 @@ public class MockErrorQueue<ResultError: Error>: MockQueue<ResultError?> {
  * - `dequeue()`: Get the first element and remove it from queue (except for the last one)
  * - `set(elements:)`: Override the queue with new elements.
  */
-public class MockQueue<T> {
+class MockQueue<T> {
     private var queue: [T]
 
-    public init(_ queue: [T] = []) {
+    init(_ queue: [T] = []) {
         self.queue = queue
     }
 
-    public func enqueue(_ elements: T...) {
+    func enqueue(_ elements: T...) {
         enqueue(elements)
     }
 
-    public func enqueue(_ elements: [T]) {
+    func enqueue(_ elements: [T]) {
         queue.append(contentsOf: elements)
     }
 
-    public func dequeue() -> T {
+    func dequeue() -> T {
         guard !queue.isEmpty else { fatalError("Queue is empty") }
 
         return queue.count > 1 ? queue.removeFirst() : queue[0]
     }
 
-    public func set(_ elements: T...) {
+    func set(_ elements: T...) {
         queue.removeAll()
         enqueue(elements)
     }

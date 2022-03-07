@@ -84,6 +84,8 @@
 		9CDA0FCE27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FCD27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift */; };
 		9CDA0FCF27D589F7008E42F6 /* GetRecentSearchTermsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FCD27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift */; };
 		9CDA0FD127D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FD027D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift */; };
+		9CDA0FD327D593CB008E42F6 /* FakeGetRecentSearchTermsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FD227D593CB008E42F6 /* FakeGetRecentSearchTermsUseCase.swift */; };
+		9CDA0FD527D593E3008E42F6 /* FakeSaveSearchTermUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDA0FD427D593E3008E42F6 /* FakeSaveSearchTermUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +151,8 @@
 		9CDA0FCB27D58356008E42F6 /* SaveSearchTermUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSearchTermUseCaseTests.swift; sourceTree = "<group>"; };
 		9CDA0FCD27D589F2008E42F6 /* GetRecentSearchTermsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecentSearchTermsUseCase.swift; sourceTree = "<group>"; };
 		9CDA0FD027D58B91008E42F6 /* GetRecentSearchTermsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRecentSearchTermsUseCaseTests.swift; sourceTree = "<group>"; };
+		9CDA0FD227D593CB008E42F6 /* FakeGetRecentSearchTermsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeGetRecentSearchTermsUseCase.swift; sourceTree = "<group>"; };
+		9CDA0FD427D593E3008E42F6 /* FakeSaveSearchTermUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSaveSearchTermUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,6 +297,8 @@
 				9CDA0FB527D52E9E008E42F6 /* CurrentWeatherRouterSpy.swift */,
 				9C722C3427D3C9F900A0E84D /* CurrentWeatherViewSpy.swift */,
 				9C722C3227D3C8AC00A0E84D /* FakeGetCurrentWeatherUseCase.swift */,
+				9CDA0FD227D593CB008E42F6 /* FakeGetRecentSearchTermsUseCase.swift */,
+				9CDA0FD427D593E3008E42F6 /* FakeSaveSearchTermUseCase.swift */,
 				9C722C1627D28B4900A0E84D /* RequestExecutorSpy.swift */,
 				9C722C1E27D2A11B00A0E84D /* URLSessionStub.swift */,
 			);
@@ -519,10 +525,12 @@
 				9C722C2627D3B64700A0E84D /* GetCurrentWeatherUseCaseTests.swift in Sources */,
 				9C722C2127D2ACD700A0E84D /* RequestExecutorTests.swift in Sources */,
 				9C722C1727D28B4900A0E84D /* RequestExecutorSpy.swift in Sources */,
+				9CDA0FD527D593E3008E42F6 /* FakeSaveSearchTermUseCase.swift in Sources */,
 				9CDA0FC527D57C84008E42F6 /* MockRecentSearchGateway.swift in Sources */,
 				9CDA0FC327D5485E008E42F6 /* RecentSearchGatewayTests.swift in Sources */,
 				9C722C2827D3B6EA00A0E84D /* MockWeatherGateway.swift in Sources */,
 				9CDA0FB627D52E9E008E42F6 /* CurrentWeatherRouterSpy.swift in Sources */,
+				9CDA0FD327D593CB008E42F6 /* FakeGetRecentSearchTermsUseCase.swift in Sources */,
 				9C722C1927D28BB100A0E84D /* WeatherGatewayTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

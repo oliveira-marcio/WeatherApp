@@ -3,18 +3,26 @@ import XCTest
 
 final class CurrentWeatherPresenterTests: XCTestCase {
     private var getCurrentWeatherUseCase: FakeGetCurrentWeatherUseCase!
+    private var getRecentSearchTermsUseCase: FakeGetRecentSearchTermsUseCase!
+    private var saveSearchTermUseCase: FakeSaveSearchTermUseCase!
     private var view: CurrentWeatherViewSpy!
     private var router: CurrentWeatherRouterSpy!
     private var presenter: CurrentWeatherPresenter!
 
+    private let recentTerms = ["New York", "Lisbon", "Rio de Janeiro"]
+
     override func setUp() {
         super.setUp()
         getCurrentWeatherUseCase = FakeGetCurrentWeatherUseCase()
+        getRecentSearchTermsUseCase = FakeGetRecentSearchTermsUseCase()
+        saveSearchTermUseCase = FakeSaveSearchTermUseCase()
         view = CurrentWeatherViewSpy()
         router = CurrentWeatherRouterSpy()
         presenter = CurrentWeatherPresenter(view: view,
                                             router: router,
-                                            getCurrentWeatherUseCase: getCurrentWeatherUseCase)
+                                            getCurrentWeatherUseCase: getCurrentWeatherUseCase,
+                                            getRecentSearchTermsUseCase: getRecentSearchTermsUseCase,
+                                            saveSearchTermUseCase: saveSearchTermUseCase)
     }
 
     override func tearDown() {
@@ -22,7 +30,24 @@ final class CurrentWeatherPresenterTests: XCTestCase {
         presenter = nil
         router = nil
         view = nil
+        saveSearchTermUseCase = nil
+        getRecentSearchTermsUseCase = nil
         getCurrentWeatherUseCase = nil
+    }
+
+    func test_WHEN_viewDidLoad_THEN_it_should_display_recent_terms() {
+        getRecentSearchTermsUseCase.recentTerms = recentTerms
+
+        let displayRecentTermsExpectation = expectation(description: "display recent terms expectation")
+        view.displayRecentTermsCompletion = {
+            displayRecentTermsExpectation.fulfill()
+        }
+
+        presenter.viewDidLoad()
+
+        waitForExpectations(timeout: 1)
+
+        XCTAssertEqual(view.recentTerms, recentTerms)
     }
 
     func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_display_and_dide_loading_and_display_current_weather() {

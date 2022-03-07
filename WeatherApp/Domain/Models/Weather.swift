@@ -3,7 +3,7 @@ struct Weather: Equatable {
     let temperature: Int
     let description: String
 
-    public init(name: String, temperature: Int, description: String) {
+    init(name: String, temperature: Int, description: String) {
         self.name = name
         self.temperature = temperature
         self.description = description

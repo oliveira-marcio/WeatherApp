@@ -1,7 +1,6 @@
 import Foundation
 
 final class DependencyResolver: DependencyResolvable {
-    var test = "test mock"
-
     lazy var weatherGateway: WeatherGateway = MockWeatherGateway()
+    lazy var recentSearchGateway: RecentSearchGateway = MockRecentSearchGateway()
 }
