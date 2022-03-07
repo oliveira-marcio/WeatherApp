@@ -50,7 +50,7 @@ final class CurrentWeatherPresenterTests: XCTestCase {
         XCTAssertEqual(view.recentTerms, recentTerms)
     }
 
-    func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_display_and_dide_loading_and_display_current_weather() {
+    func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_display_and_hide_loading_and_display_current_weather() {
         getCurrentWeatherUseCase.weather = .nyDummy
         getCurrentWeatherUseCase.weatherGatewayShouldFail = false
 
@@ -68,7 +68,25 @@ final class CurrentWeatherPresenterTests: XCTestCase {
         XCTAssertNil(router.errorViewModel)
     }
 
-    func test_GIVEN_query_WHEN_search_button_is_tapped_and_request_fails_THEN_it_should_display_and_dide_loading_and_display_error() {
+    func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_save_term_and_refresh_recent_terms() {
+        getCurrentWeatherUseCase.weather = .nyDummy
+        getCurrentWeatherUseCase.weatherGatewayShouldFail = false
+        getRecentSearchTermsUseCase.recentTerms = recentTerms
+
+        let refreshRecentTermsExpectation = expectation(description: "refresh recent terms expectation")
+        view.displayRecentTermsCompletion = {
+            refreshRecentTermsExpectation.fulfill()
+        }
+
+        presenter.onSearchButtonTapped(query: "New York")
+
+        waitForExpectations(timeout: 1)
+
+        XCTAssertEqual(saveSearchTermUseCase.term, "New York")
+        XCTAssertEqual(view.recentTerms, recentTerms)
+    }
+
+    func test_GIVEN_query_WHEN_search_button_is_tapped_and_request_fails_THEN_it_should_display_and_hide_loading_and_display_error() {
         getCurrentWeatherUseCase.weather = .nyDummy
         getCurrentWeatherUseCase.weatherGatewayShouldFail = true
 

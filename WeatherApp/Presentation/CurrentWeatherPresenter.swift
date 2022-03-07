@@ -35,20 +35,21 @@ final class CurrentWeatherPresenter {
     }
 
     func viewDidLoad() {
-        getRecentSearchTermsUseCase.invoke { [weak self] result in
-            DispatchQueue.main.async {
-                if let recentTerms = try? result.get() {
-                    self?.view?.display(recentTerms: recentTerms)
-                }
-            }
-        }
+        getRecentSearchTerms()
     }
 
     func onSearchButtonTapped(query: String) {
         view?.display(loading: true)
+        saveSearchTerm(query) { [weak self] _ in
+            self?.getCurrentWeather(for: query)
+        }
+    }
+
+    private func getCurrentWeather(for query: String) {
         getCurrentWeatherUseCase.invoke(query: query) { [weak self] result in
             DispatchQueue.main.async {
                 self?.view?.display(loading: false)
+                self?.getRecentSearchTerms()
 
                 switch result {
                 case let .success(weather):
@@ -57,7 +58,7 @@ final class CurrentWeatherPresenter {
                                                             locationName: weather.name,
                                                             locationTemperature: "\(weather.temperature)\(LocalizationKeys.resultsTemperatureSuffix)",
                                                             locationDescription: weather.description)
-                    
+
                     self?.router.displayWeatherResults(weatherViewModel: viewModel)
 
                 case .failure(_):
@@ -69,5 +70,19 @@ final class CurrentWeatherPresenter {
                 }
             }
         }
+    }
+
+    private func getRecentSearchTerms() {
+        getRecentSearchTermsUseCase.invoke { [weak self] result in
+            DispatchQueue.main.async {
+                if let recentTerms = try? result.get() {
+                    self?.view?.display(recentTerms: recentTerms)
+                }
+            }
+        }
+    }
+
+    private func saveSearchTerm(_ term: String, completion: @escaping (RecentSearchError?) -> Void) {
+        saveSearchTermUseCase.invoke(term: term, completion: completion)
     }
 }
