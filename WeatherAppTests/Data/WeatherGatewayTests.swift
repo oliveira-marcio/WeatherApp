@@ -90,7 +90,7 @@ final class WeatherGatewayTests: XCTestCase {
             getWeatherExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(actualWeather, .nyDummy)
     }
@@ -110,7 +110,7 @@ final class WeatherGatewayTests: XCTestCase {
             getWeatherExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(error, .operationFailed)
     }

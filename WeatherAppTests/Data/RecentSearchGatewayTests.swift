@@ -23,7 +23,7 @@ final class RecentSearchGatewayTests: XCTestCase {
             fetchExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(actualTerms, [])
     }
@@ -39,7 +39,7 @@ final class RecentSearchGatewayTests: XCTestCase {
             fetchExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(actualTerms, expectedTerms)
     }
@@ -58,7 +58,7 @@ final class RecentSearchGatewayTests: XCTestCase {
             fetchExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(error, .unableToFetch)
     }
@@ -76,7 +76,7 @@ final class RecentSearchGatewayTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(actualTerms, expectedTerms)
     }
@@ -95,7 +95,7 @@ final class RecentSearchGatewayTests: XCTestCase {
             }
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(actualTerms, expectedTerms)
     }
@@ -112,7 +112,7 @@ final class RecentSearchGatewayTests: XCTestCase {
             fetchExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(error, .unableToInsert)
     }

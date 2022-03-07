@@ -28,7 +28,7 @@ final class SaveSearchTermUseCaseTests: XCTestCase {
             invokeExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(recentSearchGateway.term, "Rio")
         XCTAssertNil(error)
@@ -46,7 +46,7 @@ final class SaveSearchTermUseCaseTests: XCTestCase {
             invokeExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(recentSearchGateway.term, "Rio")
         XCTAssertEqual(error, .unableToInsert)

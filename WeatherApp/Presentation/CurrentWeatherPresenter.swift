@@ -4,6 +4,7 @@ protocol CurrentWeatherView: AnyObject {
     var presenter: CurrentWeatherPresenter! { get set }
     func display(loading: Bool)
     func display(recentTerms: [RecentSearchTermViewModel])
+    func display(searchQuery: String)
 }
 
 final class CurrentWeatherPresenter {
@@ -21,6 +22,8 @@ final class CurrentWeatherPresenter {
     private let getCurrentWeatherUseCase: GetCurrentWeatherUseCase
     private let getRecentSearchTermsUseCase: GetRecentSearchTermsUseCase
     private let saveSearchTermUseCase: SaveSearchTermUseCase
+
+    private var currentRecentTerms = [String]()
 
     init(view: CurrentWeatherView,
          router: CurrentWeatherRouter,
@@ -43,6 +46,13 @@ final class CurrentWeatherPresenter {
         saveSearchTerm(query) { [weak self] _ in
             self?.getCurrentWeather(for: query)
         }
+    }
+
+    func searchTermTapped(at index: Int) {
+        guard let query = currentRecentTerms[safe: index] else { return }
+
+        view?.display(searchQuery: query)
+        onSearchButtonTapped(query: query)
     }
 
     private func getCurrentWeather(for query: String) {
@@ -76,6 +86,7 @@ final class CurrentWeatherPresenter {
         getRecentSearchTermsUseCase.invoke { [weak self] result in
             DispatchQueue.main.async {
                 if let recentTerms = try? result.get() {
+                    self?.currentRecentTerms = recentTerms
                     self?.view?.display(recentTerms: recentTerms.map { RecentSearchTermViewModel(term: $0) })
                 }
             }

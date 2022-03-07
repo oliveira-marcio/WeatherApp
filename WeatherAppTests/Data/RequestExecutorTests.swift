@@ -34,7 +34,7 @@ final class RequestExecutorTests: XCTestCase {
             requestExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(entity, TestEntity(test: "success"))
     }
@@ -54,7 +54,7 @@ final class RequestExecutorTests: XCTestCase {
             requestExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(error, .operationFailed("error"))
     }
@@ -74,7 +74,7 @@ final class RequestExecutorTests: XCTestCase {
             requestExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(error, .operationFailed("No response"))
     }
@@ -94,7 +94,7 @@ final class RequestExecutorTests: XCTestCase {
             requestExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(error, .operationFailed("500"))
     }
@@ -114,7 +114,7 @@ final class RequestExecutorTests: XCTestCase {
             requestExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(error, .operationFailed("No body"))
     }
@@ -139,7 +139,7 @@ final class RequestExecutorTests: XCTestCase {
             requestExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertTrue(parseError)
     }

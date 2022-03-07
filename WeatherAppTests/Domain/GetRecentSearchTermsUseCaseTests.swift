@@ -30,7 +30,7 @@ final class GetRecentSearchTermsUseCaseTests: XCTestCase {
             invokeExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(actualTerms, expectedTerms)
 
@@ -50,7 +50,7 @@ final class GetRecentSearchTermsUseCaseTests: XCTestCase {
             invokeExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(error, .unableToFetch)
     }

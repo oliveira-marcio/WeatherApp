@@ -38,6 +38,7 @@ extension CurrentWeatherViewController {
         table.register(UITableViewCell.self, forCellReuseIdentifier: Constants.recentSearchTermCellId)
         table.backgroundColor = .clear
         table.separatorStyle = .none
+        table.delegate = self
         return table
     }
 

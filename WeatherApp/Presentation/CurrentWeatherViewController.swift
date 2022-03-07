@@ -48,6 +48,10 @@ extension CurrentWeatherViewController: CurrentWeatherView {
         snapShot.appendItems(recentTerms)
         dataSource.apply(snapShot, animatingDifferences: true)
     }
+
+    func display(searchQuery: String) {
+        searchBar.text = searchQuery
+    }
 }
 
 extension CurrentWeatherViewController: UISearchBarDelegate {
@@ -58,6 +62,12 @@ extension CurrentWeatherViewController: UISearchBarDelegate {
 
         searchBar.resignFirstResponder()
         presenter.onSearchButtonTapped(query: query)
+    }
+}
+
+extension CurrentWeatherViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.searchTermTapped(at: indexPath.row)
     }
 }
 

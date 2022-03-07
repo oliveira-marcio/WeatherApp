@@ -28,7 +28,7 @@ final class GetCurrentWeatherUseCaseTests: XCTestCase {
             invokeExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(weatherGateway.query, "New York")
         XCTAssertEqual(actualWeather, .nyDummy)
@@ -47,7 +47,7 @@ final class GetCurrentWeatherUseCaseTests: XCTestCase {
             invokeExpectation.fulfill()
         }
 
-        waitForExpectations(timeout: 1)
+        waitForExpectations(timeout: 5)
 
         XCTAssertEqual(weatherGateway.query, "New York")
         XCTAssertEqual(error, .operationFailed)
