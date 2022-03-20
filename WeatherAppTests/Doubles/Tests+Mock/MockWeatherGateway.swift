@@ -21,6 +21,7 @@ final class MockWeatherGateway: WeatherGateway {
     }
 
     func fetchCurrentWeather(for query: String) async throws -> Weather {
+        self.query = query
         switch fetchCurrentWeatherQueue.dequeue() {
         case let .success(weather): return weather
         case let .failure(error): throw error

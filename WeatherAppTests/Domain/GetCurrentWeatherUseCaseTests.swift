@@ -17,39 +17,27 @@ final class GetCurrentWeatherUseCaseTests: XCTestCase {
         weatherGateway = nil
     }
 
-    func test_GIVEN_query_WHEN_use_case_is_invoked_THEN_weather_gateway_should_return_current_weather_for_query() {
+    func test_GIVEN_query_WHEN_use_case_is_invoked_THEN_weather_gateway_should_return_current_weather_for_query() async {
         weatherGateway.fetchCurrentWeatherQueue.set(.success(.nyDummy))
 
-        let invokeExpectation = expectation(description: "invoke expectation")
-        var actualWeather: Weather?
-
-        getCurrentWeatherUseCase.invoke(query: "New York") { result in
-            actualWeather = try? result.get()
-            invokeExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 5)
+        let actualWeather: Weather? = try? await getCurrentWeatherUseCase.invoke(query: "New York")
 
         XCTAssertEqual(weatherGateway.query, "New York")
         XCTAssertEqual(actualWeather, .nyDummy)
     }
 
-    func test_GIVEN_query_WHEN_use_case_is_invoked_and_weather_gateway_fails_THEN_weather_gateway_should_return_error_for_query() {
+    func test_GIVEN_query_WHEN_use_case_is_invoked_and_weather_gateway_fails_THEN_weather_gateway_should_return_error_for_query() async {
         weatherGateway.fetchCurrentWeatherQueue.set(.failure(.operationFailed))
 
-        let invokeExpectation = expectation(description: "invoke expectation")
-        var error: WeatherError?
+        var errorResult: WeatherError?
 
-        getCurrentWeatherUseCase.invoke(query: "New York") { result in
-            if case let .failure(errorResult) = result {
-                error = errorResult
-            }
-            invokeExpectation.fulfill()
+        do {
+            _ = try await getCurrentWeatherUseCase.invoke(query: "New York") as Weather
+        } catch {
+            errorResult = error as? WeatherError
         }
 
-        waitForExpectations(timeout: 5)
-
         XCTAssertEqual(weatherGateway.query, "New York")
-        XCTAssertEqual(error, .operationFailed)
+        XCTAssertEqual(errorResult, .operationFailed)
     }
 }
