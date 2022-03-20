@@ -4,7 +4,7 @@ import Foundation
 final class MockWeatherGateway: WeatherGateway {
     var queue = DispatchQueue(label: "com.marcio.WeatherApp.MockWeatherGateway")
 
-    var fetchCurrentWeatherDelay: Int
+    var fetchCurrentWeatherDelay: Double
     var fetchCurrentWeatherQueue = MockResultQueue<Weather, WeatherError>()
     var query: String?
 
@@ -13,16 +13,10 @@ final class MockWeatherGateway: WeatherGateway {
         fetchCurrentWeatherQueue.set(.success(.nyDummy))
     }
 
-    func fetchCurrentWeather(for query: String, completion: @escaping (Result<Weather, WeatherError>) -> Void) {
-        self.query = query
-        queue.asyncAfter(deadline: .now() + .seconds(fetchCurrentWeatherDelay), flags: .barrier) { [unowned self] in
-            completion(self.fetchCurrentWeatherQueue.dequeue())
-        }
-    }
-
     func fetchCurrentWeather(for query: String) async throws -> Weather {
         self.query = query
-        switch fetchCurrentWeatherQueue.dequeue() {
+        try await Task.sleep(nanoseconds: UInt64(fetchCurrentWeatherDelay * Double(NSEC_PER_SEC)))
+        switch self.fetchCurrentWeatherQueue.dequeue() {
         case let .success(weather): return weather
         case let .failure(error): throw error
         }

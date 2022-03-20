@@ -5,9 +5,6 @@ protocol URLRequestable {
 }
 
 protocol URLSessionProtocol {
-    func dataTask(with request: URLRequest,
-                  completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
-
     func data(for request: URLRequest, delegate: URLSessionTaskDelegate?) async throws -> (Data, URLResponse)
 }
 

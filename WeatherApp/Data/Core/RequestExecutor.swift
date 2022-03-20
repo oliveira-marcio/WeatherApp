@@ -1,7 +1,6 @@
 import Foundation
 
 protocol RequestExecutor {
-    func execute<T>(request: URLRequestable, completion: @escaping (Result<T, ApiError>) -> Void) where T: Decodable
     func execute<T>(request: URLRequestable) async throws -> T where T: Decodable
 }
 
@@ -47,50 +46,6 @@ final class RequestExecutorImplementation: RequestExecutor {
         } catch {
             throw ApiError.parseError(error.localizedDescription)
         }
-    }
-
-    func execute<T>(request: URLRequestable, completion: @escaping (Result<T, ApiError>) -> Void) where T : Decodable {
-        let task = urlSession.dataTask(with: request.urlRequest) { data, response, error in
-            // Check if an error happened while making the request
-            if let error = error {
-                completion(.failure(.operationFailed(error.localizedDescription)))
-                return
-            }
-
-            // Check if we have a `HTTPURLResponse`
-            guard let response = response as? HTTPURLResponse else {
-                completion(.failure(.operationFailed("No response")))
-                return
-            }
-
-            // Check if response is a success (ignore data if it fails)
-            guard response.type == .success else {
-                completion(.failure(.operationFailed("\(response.statusCode)")))
-                return
-            }
-
-            // Check if we have entity data
-            guard let data = data
-            else {
-                completion(.failure(.operationFailed("No body")))
-                return
-            }
-
-            // Parse data
-            do {
-                let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                jsonDecoder.dateDecodingStrategy = .iso8601
-
-                let entity = try jsonDecoder.decode(T.self, from: data)
-
-                completion(.success(entity))
-            } catch {
-                completion(.failure(.parseError(error.localizedDescription)))
-                return
-            }
-        }
-        task.resume()
     }
 }
 

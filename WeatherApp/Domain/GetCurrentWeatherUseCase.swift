@@ -1,7 +1,6 @@
 import Foundation
 
 protocol GetCurrentWeatherUseCase {
-    func invoke(query: String, completion: @escaping (Result<Weather, WeatherError>) -> Void)
     func invoke(query: String) async throws -> Weather
 }
 
@@ -22,9 +21,5 @@ final class GetCurrentWeatherUseCaseImplementation: GetCurrentWeatherUseCase {
 
     func invoke(query: String) async throws -> Weather {
         try await weatherGateway.fetchCurrentWeather(for: query)
-    }
-
-    func invoke(query: String, completion: @escaping (Result<Weather, WeatherError>) -> Void) {
-        weatherGateway.fetchCurrentWeather(for: query, completion: completion)
     }
 }
