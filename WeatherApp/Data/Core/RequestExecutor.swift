@@ -2,6 +2,7 @@ import Foundation
 
 protocol RequestExecutor {
     func execute<T>(request: URLRequestable, completion: @escaping (Result<T, ApiError>) -> Void) where T: Decodable
+    func execute<T>(request: URLRequestable) async throws -> T where T: Decodable
 }
 
 enum ApiError: Error, Equatable {
@@ -21,6 +22,31 @@ final class RequestExecutorImplementation: RequestExecutor {
 
     init(urlSession: URLSessionProtocol) {
         self.urlSession = urlSession
+    }
+    
+    func execute<T>(request: URLRequestable) async throws -> T where T : Decodable {
+        let (data, response) = try await urlSession.data(for: request.urlRequest)
+
+        // Check if we have a `HTTPURLResponse`
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw ApiError.operationFailed("No response")
+        }
+
+        // Check if response is a success (ignore data if it fails)
+        guard httpResponse.type == .success else {
+            throw ApiError.operationFailed("\(httpResponse.statusCode)")
+        }
+
+        // Parse data
+        do {
+            let jsonDecoder = JSONDecoder()
+            jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+            jsonDecoder.dateDecodingStrategy = .iso8601
+
+            return try jsonDecoder.decode(T.self, from: data)
+        } catch {
+            throw ApiError.parseError(error.localizedDescription)
+        }
     }
 
     func execute<T>(request: URLRequestable, completion: @escaping (Result<T, ApiError>) -> Void) where T : Decodable {

@@ -17,7 +17,7 @@ final class RequestExecutorTests: XCTestCase {
         urlSessionStub = nil
     }
 
-    func test_GIVEN_request_WHEN_data_is_valid_THEN_it_should_return_parsed_entity() {
+    func test_GIVEN_request_WHEN_data_is_valid_THEN_it_should_return_parsed_entity() async {
         let responseData = """
         {"test": "success"}
         """.data(using: .utf8)
@@ -26,100 +26,60 @@ final class RequestExecutorTests: XCTestCase {
                                           response: HTTPURLResponse(statusCode: 200),
                                           error: nil))
 
-        let requestExpectation = expectation(description: "request expectation")
-        var entity: TestEntity?
-
-        requestExecutor.execute(request: Request()) { (result: Result<TestEntity, ApiError>) in
-            entity = try? result.get()
-            requestExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 5)
+        let entity: TestEntity? = try? await requestExecutor.execute(request: Request())
 
         XCTAssertEqual(entity, TestEntity(test: "success"))
     }
 
-    func test_GIVEN_request_WHEN_there_is_an_error_THEN_it_should_return_api_error() {
+    func test_GIVEN_request_WHEN_there_is_an_error_THEN_it_should_return_api_error() async {
         urlSessionStub.enqueue(response: (data: nil,
                                           response: nil,
                                           error: SomeError.error))
 
-        let requestExpectation = expectation(description: "request expectation")
-        var error: ApiError?
+        var errorResult: ApiError?
 
-        requestExecutor.execute(request: Request()) { (result: Result<TestEntity, ApiError>) in
-            if case let .failure(errorResult) = result {
-                error = errorResult
-            }
-            requestExpectation.fulfill()
+        do {
+            _ = try await requestExecutor.execute(request: Request()) as TestEntity
+        } catch {
+            errorResult = error as? ApiError
         }
 
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(error, .operationFailed("error"))
+        XCTAssertEqual(errorResult, .operationFailed("error"))
     }
 
-    func test_GIVEN_request_WHEN_there_is_no_response_THEN_it_should_return_api_error() {
+    func test_GIVEN_request_WHEN_there_is_no_response_THEN_it_should_return_api_error() async {
         urlSessionStub.enqueue(response: (data: nil,
                                           response: nil,
                                           error: nil))
 
-        let requestExpectation = expectation(description: "request expectation")
-        var error: ApiError?
+        var errorResult: ApiError?
 
-        requestExecutor.execute(request: Request()) { (result: Result<TestEntity, ApiError>) in
-            if case let .failure(errorResult) = result {
-                error = errorResult
-            }
-            requestExpectation.fulfill()
+        do {
+            _ = try await requestExecutor.execute(request: Request()) as TestEntity
+        } catch {
+            errorResult = error as? ApiError
         }
 
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(error, .operationFailed("No response"))
+        XCTAssertEqual(errorResult, .operationFailed("error"))
     }
 
-    func test_GIVEN_request_WHEN_response_is_not_success_THEN_it_should_return_api_error() {
-        urlSessionStub.enqueue(response: (data: nil,
+    func test_GIVEN_request_WHEN_response_is_not_success_THEN_it_should_return_api_error() async {
+        urlSessionStub.enqueue(response: (data: "error".data(using: .utf8),
                                           response: HTTPURLResponse(statusCode: 500),
                                           error: nil))
 
-        let requestExpectation = expectation(description: "request expectation")
-        var error: ApiError?
+        var errorResult: ApiError?
 
-        requestExecutor.execute(request: Request()) { (result: Result<TestEntity, ApiError>) in
-            if case let .failure(errorResult) = result {
-                error = errorResult
-            }
-            requestExpectation.fulfill()
+        do {
+            _ = try await requestExecutor.execute(request: Request()) as TestEntity
+        } catch {
+            errorResult = error as? ApiError
         }
 
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(error, .operationFailed("500"))
+        XCTAssertEqual(errorResult, .operationFailed("500"))
     }
 
-    func test_GIVEN_request_WHEN_response_is_success_and_there_is_no_data_THEN_it_should_return_api_error() {
-        urlSessionStub.enqueue(response: (data: nil,
-                                          response: HTTPURLResponse(statusCode: 200),
-                                          error: nil))
-
-        let requestExpectation = expectation(description: "request expectation")
-        var error: ApiError?
-
-        requestExecutor.execute(request: Request()) { (result: Result<TestEntity, ApiError>) in
-            if case let .failure(errorResult) = result {
-                error = errorResult
-            }
-            requestExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(error, .operationFailed("No body"))
-    }
-
-    func test_GIVEN_request_WHEN_response_is_success_and_data_is_invalid_THEN_it_should_return_parse_error() {
+    func test_GIVEN_request_WHEN_response_is_success_and_data_is_invalid_THEN_it_should_return_parse_error() async {
         let responseData = """
         {"invalid": "failure"}
         """.data(using: .utf8)
@@ -128,18 +88,15 @@ final class RequestExecutorTests: XCTestCase {
                                           response: HTTPURLResponse(statusCode: 200),
                                           error: nil))
 
-        let requestExpectation = expectation(description: "request expectation")
         var parseError = false
 
-        requestExecutor.execute(request: Request()) { (result: Result<TestEntity, ApiError>) in
-            if case let .failure(errorResult) = result,
-                case .parseError(_) = errorResult {
+        do {
+            _ = try await requestExecutor.execute(request: Request()) as TestEntity
+        } catch {
+            if case .parseError(_) = error as? ApiError {
                 parseError = true
             }
-            requestExpectation.fulfill()
         }
-
-        waitForExpectations(timeout: 5)
 
         XCTAssertTrue(parseError)
     }

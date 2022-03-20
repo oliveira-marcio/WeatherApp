@@ -12,6 +12,20 @@ final class URLSessionStub: URLSessionProtocol {
         responses.append(response)
     }
 
+    func data(for request: URLRequest, delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse) {
+        guard let firstResponse = responses.first else {
+            throw ApiError.operationFailed("error")
+        }
+
+        responses.removeFirst()
+
+        guard let data = firstResponse.data, let response = firstResponse.response else {
+            throw ApiError.operationFailed("error")
+        }
+
+        return (data, response)
+    }
+
     func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
         guard let firstResponse = responses.first else {
             return StubTask(response: nil, completionHandler: completionHandler)
