@@ -7,7 +7,7 @@ protocol CurrentWeatherView: AnyObject {
     func display(searchQuery: String)
 }
 
-final class CurrentWeatherPresenter {
+@MainActor final class CurrentWeatherPresenter {
     enum LocalizationKeys {
         static let errorTitle = NSLocalizedString("WeatherRequestFailTitle", comment: "")
         static let errorMessage = NSLocalizedString("WeatherRequestFailMessage", comment: "")
@@ -56,39 +56,43 @@ final class CurrentWeatherPresenter {
     }
 
     private func getCurrentWeather(for query: String) {
-        getCurrentWeatherUseCase.invoke(query: query) { [weak self] result in
-            DispatchQueue.main.async {
-                self?.view?.display(loading: false)
-                self?.getRecentSearchTerms()
+        Task {
+            let weather = try? await getCurrentWeatherUseCase.invoke(query: query)
 
-                switch result {
-                case let .success(weather):
-                    let viewModel = CurrentWeatherViewModel(title: LocalizationKeys.resultsTitle,
-                                                            dismissLabel: LocalizationKeys.resultsDismissLabel,
-                                                            locationName: weather.name,
-                                                            locationTemperature: "\(weather.temperature)\(LocalizationKeys.resultsTemperatureSuffix)",
-                                                            locationDescription: weather.description)
+            view?.display(loading: false)
+            getRecentSearchTerms()
 
-                    self?.router.displayWeatherResults(weatherViewModel: viewModel)
-
-                case .failure(_):
-                    let viewModel = ErrorViewModel(title: LocalizationKeys.errorTitle,
-                                                   message: LocalizationKeys.errorMessage,
-                                                   dismiss: LocalizationKeys.errorDismiss)
-
-                    self?.router.displayError(errorViewModel: viewModel)
-                }
+            if let weather = weather {
+                handleSuccessful(weather: weather)
+            } else {
+                handleWeatherFailure()
             }
         }
     }
 
-    private func getRecentSearchTerms() {
+    private func handleSuccessful(weather: Weather) {
+        let viewModel = CurrentWeatherViewModel(title: LocalizationKeys.resultsTitle,
+                                                dismissLabel: LocalizationKeys.resultsDismissLabel,
+                                                locationName: weather.name,
+                                                locationTemperature: "\(weather.temperature)\(LocalizationKeys.resultsTemperatureSuffix)",
+                                                locationDescription: weather.description)
+
+        router.displayWeatherResults(weatherViewModel: viewModel)
+    }
+
+    private func handleWeatherFailure() {
+        let viewModel = ErrorViewModel(title: LocalizationKeys.errorTitle,
+                                       message: LocalizationKeys.errorMessage,
+                                       dismiss: LocalizationKeys.errorDismiss)
+
+        router.displayError(errorViewModel: viewModel)
+    }
+
+    @MainActor private func getRecentSearchTerms() {
         getRecentSearchTermsUseCase.invoke { [weak self] result in
-            DispatchQueue.main.async {
-                if let recentTerms = try? result.get() {
-                    self?.currentRecentTerms = recentTerms
-                    self?.view?.display(recentTerms: recentTerms.map { RecentSearchTermViewModel(term: $0) })
-                }
+            if let recentTerms = try? result.get() {
+                self?.currentRecentTerms = recentTerms
+                self?.view?.display(recentTerms: recentTerms.map { RecentSearchTermViewModel(term: $0) })
             }
         }
     }

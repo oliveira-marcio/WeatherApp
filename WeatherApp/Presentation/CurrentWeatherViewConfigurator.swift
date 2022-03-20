@@ -1,4 +1,4 @@
-final class CurrentWeatherViewConfigurator {
+@MainActor final class CurrentWeatherViewConfigurator {
     static func configure(view: CurrentWeatherViewController) {
         let getCurrentWeatherUseCase = SceneDelegate.appEnvironment.domain.getCurrentWeatherUseCase
         let getRecentSearchTermsUseCase = SceneDelegate.appEnvironment.domain.getRecentSearchTermsUseCase

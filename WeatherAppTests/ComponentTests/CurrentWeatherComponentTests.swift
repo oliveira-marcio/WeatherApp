@@ -1,7 +1,7 @@
 import XCTest
 @testable import WeatherApp
 
-final class CurrentWeatherComponentTests: XCTestCase {
+@MainActor final class CurrentWeatherComponentTests: XCTestCase {
     private var environment: ComponentTestEnvironment!
     private var presenter: CurrentWeatherPresenter!
     private var view: CurrentWeatherViewSpy!
@@ -11,7 +11,7 @@ final class CurrentWeatherComponentTests: XCTestCase {
 
     private let recentTerms = ["New York", "Lisbon", "Rio de Janeiro"]
 
-    override func setUp() {
+    @MainActor override func setUp() {
         super.setUp()
         environment = ComponentTestEnvironment.bootstrap()
         presenter = environment.presentation.currentWeatherPresenter
@@ -21,7 +21,7 @@ final class CurrentWeatherComponentTests: XCTestCase {
         recentSearchGateway = environment.data.recentSearchGateway as? MockRecentSearchGateway
     }
 
-    override func tearDown() {
+    @MainActor override func tearDown() {
         super.tearDown()
         environment = nil
     }

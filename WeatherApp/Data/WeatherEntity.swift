@@ -28,7 +28,7 @@ extension WeatherAPI {
         let windDegree: Int
         let windDir: String
         let pressure: Int
-        let precip: Int
+        let precip: Double
         let humidity: Int
         let cloudcover: Int
         let feelslike: Int

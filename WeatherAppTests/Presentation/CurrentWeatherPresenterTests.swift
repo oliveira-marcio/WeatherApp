@@ -1,7 +1,7 @@
 import XCTest
 @testable import WeatherApp
 
-final class CurrentWeatherPresenterTests: XCTestCase {
+@MainActor final class CurrentWeatherPresenterTests: XCTestCase {
     private var getCurrentWeatherUseCase: FakeGetCurrentWeatherUseCase!
     private var getRecentSearchTermsUseCase: FakeGetRecentSearchTermsUseCase!
     private var saveSearchTermUseCase: FakeSaveSearchTermUseCase!
@@ -11,7 +11,7 @@ final class CurrentWeatherPresenterTests: XCTestCase {
 
     private let recentTerms = ["New York", "Lisbon", "Rio de Janeiro"]
 
-    override func setUp() {
+    @MainActor override func setUp() {
         super.setUp()
         getCurrentWeatherUseCase = FakeGetCurrentWeatherUseCase()
         getRecentSearchTermsUseCase = FakeGetRecentSearchTermsUseCase()
@@ -25,7 +25,7 @@ final class CurrentWeatherPresenterTests: XCTestCase {
                                             saveSearchTermUseCase: saveSearchTermUseCase)
     }
 
-    override func tearDown() {
+    @MainActor override func tearDown() {
         super.tearDown()
         presenter = nil
         router = nil
@@ -56,7 +56,6 @@ final class CurrentWeatherPresenterTests: XCTestCase {
 
     func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_display_and_hide_loading_and_display_current_weather() {
         getCurrentWeatherUseCase.weather = .nyDummy
-        getCurrentWeatherUseCase.weatherGatewayShouldFail = false
 
         let displayWeatherExpectation = expectation(description: "display weather expectation")
         router.displayWeatherCompletion = {
@@ -74,7 +73,6 @@ final class CurrentWeatherPresenterTests: XCTestCase {
 
     func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_save_term_and_refresh_recent_terms() {
         getCurrentWeatherUseCase.weather = .nyDummy
-        getCurrentWeatherUseCase.weatherGatewayShouldFail = false
         getRecentSearchTermsUseCase.recentTerms = recentTerms
 
         let refreshRecentTermsExpectation = expectation(description: "refresh recent terms expectation")
@@ -91,8 +89,7 @@ final class CurrentWeatherPresenterTests: XCTestCase {
     }
 
     func test_GIVEN_query_WHEN_search_button_is_tapped_and_request_fails_THEN_it_should_display_and_hide_loading_and_display_error() {
-        getCurrentWeatherUseCase.weather = .nyDummy
-        getCurrentWeatherUseCase.weatherGatewayShouldFail = true
+        getCurrentWeatherUseCase.weather = nil
 
         let displayErrorExpectation = expectation(description: "display error expectation")
         router.displayErrorCompletion = {
@@ -125,7 +122,6 @@ final class CurrentWeatherPresenterTests: XCTestCase {
         let refreshedRecentTerms = ["Rio de Janeiro", "New York", "Lisbon"]
 
         getCurrentWeatherUseCase.weather = .rjDummy
-        getCurrentWeatherUseCase.weatherGatewayShouldFail = false
         getRecentSearchTermsUseCase.recentTerms = refreshedRecentTerms
 
         let displayWeatherExpectation = expectation(description: "display weather expectation")

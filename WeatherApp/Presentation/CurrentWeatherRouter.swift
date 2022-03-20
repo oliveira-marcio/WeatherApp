@@ -1,12 +1,12 @@
 import Foundation
 import UIKit
 
-protocol CurrentWeatherRouter {
+@MainActor protocol CurrentWeatherRouter {
     func displayWeatherResults(weatherViewModel: CurrentWeatherViewModel)
     func displayError(errorViewModel: ErrorViewModel)
 }
 
-final class CurrentWeatherRouterImplementation: CurrentWeatherRouter {
+@MainActor final class CurrentWeatherRouterImplementation: CurrentWeatherRouter {
     weak var currentWeatherViewController: CurrentWeatherViewController?
 
     init(currentWeatherViewController: CurrentWeatherViewController) {
