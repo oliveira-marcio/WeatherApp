@@ -6,6 +6,7 @@ enum WeatherError: Error {
 
 protocol WeatherGateway {
     func fetchCurrentWeather(for query: String, completion: @escaping (Result<Weather, WeatherError>) -> Void)
+    func fetchCurrentWeather(for query: String) async throws -> Weather
 }
 
 final class WeatherGatewayImplementation: WeatherGateway {
@@ -17,6 +18,17 @@ final class WeatherGatewayImplementation: WeatherGateway {
         self.baseURL = baseURL
         self.apiKey = apiKey
         self.requestExecutor = requestExecutor
+    }
+
+    func fetchCurrentWeather(for query: String) async throws -> Weather {
+        let request = WeatherAPI.GetCurrentWeatherRequest(baseURL: baseURL, apiKey: apiKey, query: query)
+
+        do {
+            let weatherEntity: WeatherAPI.WeatherEntity = try await requestExecutor.execute(request: request)
+            return Weather(from: weatherEntity)
+        } catch {
+            throw WeatherError.operationFailed
+        }
     }
 
     func fetchCurrentWeather(for query: String, completion: @escaping (Result<Weather, WeatherError>) -> Void) {

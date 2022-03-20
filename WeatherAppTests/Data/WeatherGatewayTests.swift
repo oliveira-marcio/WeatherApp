@@ -24,16 +24,16 @@ final class WeatherGatewayTests: XCTestCase {
         urlSessionStub = nil
     }
 
-    func test_GIVEN_query_WHEN_fetchCurrentWeather_is_called_THEN_it_should_execute_proper_request() {
+    func test_GIVEN_query_WHEN_fetchCurrentWeather_is_called_THEN_it_should_execute_proper_request() async {
         let requestExecutor = RequestExecutorSpy()
         let gateway = WeatherGatewayImplementation(baseURL: baseURL, apiKey: apiKey, requestExecutor: requestExecutor)
 
-        gateway.fetchCurrentWeather(for: "New York") { _ in }
+        _ = try? await gateway.fetchCurrentWeather(for: "New York")
 
         XCTAssertEqual(requestExecutor.request?.urlRequest.description, "https://www.foo.com/current?access_key=apiKey&query=New%20York")
     }
 
-    func test_GIVEN_query_WHEN_fetchCurrentWeather_is_called_THEN_it_should_return_current_weather() {
+    func test_GIVEN_query_WHEN_fetchCurrentWeather_is_called_THEN_it_should_return_current_weather() async {
         let responseData = """
         {
             "request": {
@@ -82,36 +82,24 @@ final class WeatherGatewayTests: XCTestCase {
                                           response: HTTPURLResponse(statusCode: 200),
                                           error: nil))
 
-        let getWeatherExpectation = expectation(description: "get current weather expectation")
-        var actualWeather: Weather?
-
-        gateway.fetchCurrentWeather(for: "New York") { result in
-            actualWeather = try? result.get()
-            getWeatherExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 5)
+        let actualWeather: Weather? = try? await gateway.fetchCurrentWeather(for: "New York")
 
         XCTAssertEqual(actualWeather, .nyDummy)
     }
 
-    func test_GIVEN_query_WHEN_fetchCurrentWeather_is_called_and_request_fails_THEN_it_should_return_error() {
+    func test_GIVEN_query_WHEN_fetchCurrentWeather_is_called_and_request_fails_THEN_it_should_return_error() async {
         urlSessionStub.enqueue(response: (data: "".data(using: .utf8),
                                           response: HTTPURLResponse(statusCode: 500),
                                           error: nil))
 
-        let getWeatherExpectation = expectation(description: "get current weather expectation")
-        var error: WeatherError?
+        var errorResult: WeatherError?
 
-        gateway.fetchCurrentWeather(for: "New York") { result in
-            if case let .failure(errorResult) = result {
-                error = errorResult
-            }
-            getWeatherExpectation.fulfill()
+        do {
+            _ = try await gateway.fetchCurrentWeather(for: "New York") as Weather
+        } catch {
+            errorResult = error as? WeatherError
         }
 
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(error, .operationFailed)
+        XCTAssertEqual(errorResult, .operationFailed)
     }
 }
