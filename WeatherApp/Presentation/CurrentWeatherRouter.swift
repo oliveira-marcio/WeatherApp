@@ -14,6 +14,8 @@ import UIKit
     }
 
     func displayWeatherResults(weatherViewModel: CurrentWeatherViewModel) {
+        guard let currentWeatherViewController = currentWeatherViewController else { return }
+
         let resultsController = UIAlertController(title: weatherViewModel.title,
                                                   message: "",
                                                   preferredStyle: .actionSheet)
@@ -24,7 +26,13 @@ import UIKit
 
         resultsController.addAction(UIAlertAction(title: weatherViewModel.dismissLabel, style: .cancel))
 
-        currentWeatherViewController?.present(resultsController, animated: true) {() -> Void in
+        if let popoverController = resultsController.popoverPresentationController {
+            popoverController.sourceView = currentWeatherViewController.view
+            popoverController.sourceRect = currentWeatherViewController.view.bounds
+            popoverController.permittedArrowDirections = []
+        }
+
+        currentWeatherViewController.present(resultsController, animated: true) {() -> Void in
             // Disable scene interactions to avoid results dismiss on tapping outside
             resultsController.view.superview?.subviews[0].isUserInteractionEnabled = false
         }
