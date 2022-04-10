@@ -6,6 +6,7 @@ Weather App for iOS - Small iOS app made with Swift and UIKit, based on [Clean A
 - Fetches current weather for a location using a query search
 - Keeps history of recent search terms for quick search
 - UI in plain UIKit (no Storyboards 🎉)
+- Structured concurrency with async/await and actors
 - Extra `Mock` target to run the app with mocked data (more details below)
 - Ready for localization
 - Dark mode
@@ -20,9 +21,8 @@ Weather App for iOS - Small iOS app made with Swift and UIKit, based on [Clean A
 
 ## Things to improve
 - Should implement a real DB with CoreData for persisting the recent search terms (currently using an in-memory DB)
-- Project should be modularized in packages, so unit tests can run in a MacOS target without simulators 
+- Project should be modularized in packages with no code related to iOS (Domain, Data and Presentation), so unit tests can run in a MacOS target without simulators 
 - UI with SwiftUI, so we'll have live preview and less boilerplate
-- Structured concurrency with async/await to replace verbose completions
 
 ## Run App
 API keys must be added on a new file: `/WeatherApp/WeatherApp/Configuration/Secrets.xcconfig`
