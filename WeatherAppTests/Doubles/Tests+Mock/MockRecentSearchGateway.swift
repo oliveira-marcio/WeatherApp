@@ -2,8 +2,6 @@ import Foundation
 @testable import WeatherApp
 
 final class MockRecentSearchGateway: RecentSearchGateway {
-    private var queue = DispatchQueue(label: "com.marcio.WeatherApp.MockRecentSearchGateway")
-
     var fetchAllTermsDelay: Double
     var fetchAllTermsQueue = MockResultQueue<[String], RecentSearchError>()
 
@@ -17,19 +15,6 @@ final class MockRecentSearchGateway: RecentSearchGateway {
 
         fetchAllTermsQueue.set(.success(["New York", "Lisbon", "Rio de Janeiro"]))
         insertTermQueue.set(nil)
-    }
-
-    func fetchAllTerms(completion: @escaping (Result<[String], RecentSearchError>) -> Void) {
-        queue.asyncAfter(deadline: .now() + .seconds(Int(fetchAllTermsDelay))) { [unowned self] in
-            completion(self.fetchAllTermsQueue.dequeue())
-        }
-    }
-
-    func insert(term: String, completion: @escaping (RecentSearchError?) -> Void) {
-        self.term = term
-        queue.asyncAfter(deadline: .now() + .seconds(Int(insertTermDelay))) { [unowned self] in
-            completion(self.insertTermQueue.dequeue())
-        }
     }
 
     func fetchAllTerms() async throws -> [String] {
