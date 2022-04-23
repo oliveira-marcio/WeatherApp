@@ -8,4 +8,9 @@ final class FakeSaveSearchTermUseCase: SaveSearchTermUseCase {
         self.term = term
         completion(recentSearchGatewayShouldFail ? .unableToInsert : nil)
     }
+
+    func invoke(term: String) async throws {
+        guard recentSearchGatewayShouldFail else { return }
+        throw RecentSearchError.unableToInsert
+    }
 }

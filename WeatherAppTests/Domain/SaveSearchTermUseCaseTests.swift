@@ -17,38 +17,26 @@ final class SaveSearchTermUseCaseTests: XCTestCase {
         recentSearchGateway = nil
     }
 
-    func test_GIVEN_term_WHEN_use_case_is_invoked_THEN_it_should_return_no_error() {
+    func test_GIVEN_term_WHEN_use_case_is_invoked_THEN_it_should_return_no_error() async throws {
         recentSearchGateway.insertTermQueue.set(nil)
 
-        let invokeExpectation = expectation(description: "invoke expectation")
-        var error: RecentSearchError?
-
-        saveSearchTermUseCase.invoke(term: "Rio") { errorResult in
-            error = errorResult
-            invokeExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 5)
+        try await saveSearchTermUseCase.invoke(term: "Rio")
 
         XCTAssertEqual(recentSearchGateway.term, "Rio")
-        XCTAssertNil(error)
-
     }
 
-    func test_GIVEN_term_WHEN_use_case_is_invoked_and_gateway_fails_THEN_it_should_return_insert_error() {
+    func test_GIVEN_term_WHEN_use_case_is_invoked_and_gateway_fails_THEN_it_should_return_insert_error() async {
         recentSearchGateway.insertTermQueue.set(.unableToInsert)
 
-        let invokeExpectation = expectation(description: "invoke expectation")
-        var error: RecentSearchError?
+        var errorResult: RecentSearchError?
 
-        saveSearchTermUseCase.invoke(term: "Rio") { errorResult in
-            error = errorResult
-            invokeExpectation.fulfill()
+        do {
+            try await saveSearchTermUseCase.invoke(term: "Rio")
+        } catch {
+            errorResult = error as? RecentSearchError
         }
 
-        waitForExpectations(timeout: 5)
-
         XCTAssertEqual(recentSearchGateway.term, "Rio")
-        XCTAssertEqual(error, .unableToInsert)
+        XCTAssertEqual(errorResult, .unableToInsert)
     }
 }

@@ -69,7 +69,7 @@ final class RecentSearchGatewayTests: XCTestCase {
         var errorResult: RecentSearchError?
 
         do {
-            _ = try await gateway.insert(term: "Term 4")
+            try await gateway.insert(term: "Term 4")
         } catch {
             errorResult = error as? RecentSearchError
         }

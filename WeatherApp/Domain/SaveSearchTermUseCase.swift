@@ -2,6 +2,7 @@ import Foundation
 
 protocol SaveSearchTermUseCase {
     func invoke(term: String, completion: @escaping (RecentSearchError?) -> Void)
+    func invoke(term: String) async throws
 }
 
 protocol SaveSearchTermUseCaseDependenciesResolvable {
@@ -21,5 +22,9 @@ final class SaveSearchTermUseCaseImplementation: SaveSearchTermUseCase {
 
     func invoke(term: String, completion: @escaping (RecentSearchError?) -> Void) {
         recentSearchGateway.insert(term: term, completion: completion)
+    }
+
+    func invoke(term: String) async throws {
+        try await recentSearchGateway.insert(term: term)
     }
 }
