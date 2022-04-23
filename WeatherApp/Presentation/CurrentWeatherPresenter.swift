@@ -43,9 +43,8 @@ protocol CurrentWeatherView: AnyObject {
 
     func onSearchButtonTapped(query: String) {
         view?.display(loading: true)
-        saveSearchTerm(query) { [weak self] _ in
-            self?.getCurrentWeather(for: query)
-        }
+        saveSearchTerm(query)
+        getCurrentWeather(for: query)
     }
 
     func searchTermTapped(at index: Int) {
@@ -89,15 +88,16 @@ protocol CurrentWeatherView: AnyObject {
     }
 
     private func getRecentSearchTerms() {
-        getRecentSearchTermsUseCase.invoke { [weak self] result in
-            if let recentTerms = try? result.get() {
-                self?.currentRecentTerms = recentTerms
-                self?.view?.display(recentTerms: recentTerms.map { RecentSearchTermViewModel(term: $0) })
-            }
+        Task {
+            let recentTerms = (try? await getRecentSearchTermsUseCase.invoke()) ?? []
+            currentRecentTerms = recentTerms
+            view?.display(recentTerms: recentTerms.map { RecentSearchTermViewModel(term: $0) })
         }
     }
 
-    private func saveSearchTerm(_ term: String, completion: @escaping (RecentSearchError?) -> Void) {
-        saveSearchTermUseCase.invoke(term: term, completion: completion)
+    private func saveSearchTerm(_ term: String) {
+        Task {
+            try? await saveSearchTermUseCase.invoke(term: term)
+        }
     }
 }
