@@ -7,4 +7,12 @@ final class FakeGetRecentSearchTermsUseCase: GetRecentSearchTermsUseCase {
     func invoke(completion: @escaping (Result<[String], RecentSearchError>) -> Void) {
         completion(recentSearchGatewayShouldFail ? .failure(.unableToFetch) : .success(recentTerms))
     }
+
+    func invoke() async throws -> [String] {
+        if recentSearchGatewayShouldFail {
+            throw RecentSearchError.unableToFetch
+        } else {
+            return recentTerms
+        }
+    }
 }

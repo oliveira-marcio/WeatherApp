@@ -2,6 +2,7 @@ import Foundation
 
 protocol GetRecentSearchTermsUseCase {
     func invoke(completion: @escaping (Result<[String], RecentSearchError>) -> Void)
+    func invoke() async throws -> [String]
 }
 
 protocol GetRecentSearchTermsUseCaseDependenciesResolvable {
@@ -26,5 +27,9 @@ final class GetRecentSearchTermsUseCaseImplementation: GetRecentSearchTermsUseCa
             case let .failure(error): completion(.failure(error))
             }
         }
+    }
+
+    func invoke() async throws -> [String] {
+        try await recentSearchGateway.fetchAllTerms()
     }
 }

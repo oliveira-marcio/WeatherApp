@@ -32,7 +32,7 @@ final class GetCurrentWeatherUseCaseTests: XCTestCase {
         var errorResult: WeatherError?
 
         do {
-            _ = try await getCurrentWeatherUseCase.invoke(query: "New York") as Weather
+            _ = try await getCurrentWeatherUseCase.invoke(query: "New York")
         } catch {
             errorResult = error as? WeatherError
         }

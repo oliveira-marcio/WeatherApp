@@ -82,7 +82,7 @@ final class WeatherGatewayTests: XCTestCase {
                                           response: HTTPURLResponse(statusCode: 200),
                                           error: nil))
 
-        let actualWeather: Weather? = try? await gateway.fetchCurrentWeather(for: "New York")
+        let actualWeather = try? await gateway.fetchCurrentWeather(for: "New York")
 
         XCTAssertEqual(actualWeather, .nyDummy)
     }
@@ -95,7 +95,7 @@ final class WeatherGatewayTests: XCTestCase {
         var errorResult: WeatherError?
 
         do {
-            _ = try await gateway.fetchCurrentWeather(for: "New York") as Weather
+            _ = try await gateway.fetchCurrentWeather(for: "New York")
         } catch {
             errorResult = error as? WeatherError
         }

@@ -17,41 +17,28 @@ final class GetRecentSearchTermsUseCaseTests: XCTestCase {
         recentSearchGateway = nil
     }
 
-    func test_WHEN_use_case_is_invoked_THEN_it_should_return_recent_terms() {
+    func test_WHEN_use_case_is_invoked_THEN_it_should_return_recent_terms() async {
         let expectedTerms = ["Rio", "Lisbon"]
 
         recentSearchGateway.fetchAllTermsQueue.set(.success(expectedTerms))
 
-        let invokeExpectation = expectation(description: "invoke expectation")
-        var actualTerms: [String]?
-
-        getRecentSearchTermsUseCase.invoke{ result in
-            actualTerms = try? result.get()
-            invokeExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 5)
+        let actualTerms = try? await getRecentSearchTermsUseCase.invoke()
 
         XCTAssertEqual(actualTerms, expectedTerms)
-
     }
 
 
-    func test_WHEN_use_case_is_invoked_and_gateway_fails_THEN_it_should_return_fetch_error() {
+    func test_WHEN_use_case_is_invoked_and_gateway_fails_THEN_it_should_return_fetch_error() async {
         recentSearchGateway.fetchAllTermsQueue.set(.failure(.unableToFetch))
 
-        let invokeExpectation = expectation(description: "invoke expectation")
-        var error: RecentSearchError?
+        var errorResult: RecentSearchError?
 
-        getRecentSearchTermsUseCase.invoke { result in
-            if case let .failure(errorResult) = result {
-                error = errorResult
-            }
-            invokeExpectation.fulfill()
+        do {
+            _ = try await getRecentSearchTermsUseCase.invoke()
+        } catch {
+            errorResult = error as? RecentSearchError
         }
 
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(error, .unableToFetch)
+        XCTAssertEqual(errorResult, .unableToFetch)
     }
 }
