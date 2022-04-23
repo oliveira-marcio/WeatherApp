@@ -2,5 +2,6 @@
 "WeatherRequestFailMessage" = "Failed to request current weather";
 "WeatherRequestFailDismiss" = "Dismiss";
 "WeatherResultsTitle" = "Current weather for";
-"WeatherResultsTemperatureSuffix" = "ºC";
+"WeatherResultsTemperature" = "%dºC";
 "WeatherResultsDismissLabel" = "Dismiss";
+"WeatherSearchHint" = "Enter location";

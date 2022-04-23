@@ -11,6 +11,10 @@ extension CurrentWeatherViewController {
         static let recentIcon: String = "ic_history"
     }
 
+    private enum LocalizationKeys {
+        static let searchHint = "WeatherSearchHint"
+    }
+
     private enum AccessibilityIdentifiers {
         static let currentWeatherScene: String = "current_weather_scene"
         static let recentSearchTermList: String = "recent_search_term_list"
@@ -19,7 +23,7 @@ extension CurrentWeatherViewController {
 
     internal func createSearchBar() -> UISearchBar {
         let bar = UISearchBar()
-        bar.placeholder = "Enter location"
+        bar.placeholder = LocalizationKeys.searchHint.localized()
         bar.searchTextField.layer.borderWidth = Constants.searchViewBorderWidth
         bar.searchTextField.layer.cornerRadius = Constants.searchViewCornerRadius
         bar.searchTextField.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor

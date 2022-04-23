@@ -104,7 +104,7 @@ final class RequestExecutorTests: XCTestCase {
     enum SomeError: Error, LocalizedError {
         case error
 
-        var errorDescription: String? { NSLocalizedString("error", comment: "") }
+        var errorDescription: String? { "error".localized() }
     }
 
     struct Request: URLRequestable {

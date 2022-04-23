@@ -60,7 +60,7 @@ import XCTest
         XCTAssertEqual(weatherGateway.query, "New York")
         XCTAssertEqual(router.weatherViewModel, .stub(from: .nyDummy))
         XCTAssertEqual(view.loadingCalls, [true, false])
-        XCTAssertNil(router.errorViewModel)
+        XCTAssertFalse(router.displayErrorCalled)
     }
 
     func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_save_term_and_refresh_recent_terms() {
@@ -93,7 +93,7 @@ import XCTest
         waitForExpectations(timeout: 5)
 
         XCTAssertEqual(weatherGateway.query, "New York")
-        XCTAssertEqual(router.errorViewModel, .dummy)
+        XCTAssertTrue(router.displayErrorCalled)
         XCTAssertEqual(view.loadingCalls, [true, false])
         XCTAssertNil(router.weatherViewModel)
     }
@@ -137,6 +137,6 @@ import XCTest
         XCTAssertEqual(weatherGateway.query, "Rio de Janeiro")
         XCTAssertEqual(view.recentTerms, RecentSearchTermViewModel.stubList(from: refreshedRecentTerms))
         XCTAssertEqual(view.loadingCalls, [true, false])
-        XCTAssertNil(router.errorViewModel)
+        XCTAssertFalse(router.displayErrorCalled)
     }
 }

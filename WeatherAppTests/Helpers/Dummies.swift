@@ -12,18 +12,10 @@ extension Weather {
 
 extension CurrentWeatherViewModel {
     static func stub(from weather: Weather) -> CurrentWeatherViewModel {
-        CurrentWeatherViewModel(title: CurrentWeatherPresenter.LocalizationKeys.resultsTitle,
-                                dismissLabel: CurrentWeatherPresenter.LocalizationKeys.resultsDismissLabel,
-                                locationName: weather.name,
-                                locationTemperature: "\(weather.temperature)\(CurrentWeatherPresenter.LocalizationKeys.resultsTemperatureSuffix)",
+        CurrentWeatherViewModel(locationName: weather.name,
+                                locationTemperature: weather.temperature,
                                 locationDescription: weather.description)
     }
-}
-
-extension ErrorViewModel {
-    static let dummy = ErrorViewModel(title: CurrentWeatherPresenter.LocalizationKeys.errorTitle,
-                                      message: CurrentWeatherPresenter.LocalizationKeys.errorMessage,
-                                      dismiss: CurrentWeatherPresenter.LocalizationKeys.errorDismiss)
 }
 
 extension RecentSearchTermViewModel {

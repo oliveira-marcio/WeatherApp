@@ -8,15 +8,6 @@ protocol CurrentWeatherView: AnyObject {
 }
 
 @MainActor final class CurrentWeatherPresenter {
-    enum LocalizationKeys {
-        static let errorTitle = NSLocalizedString("WeatherRequestFailTitle", comment: "")
-        static let errorMessage = NSLocalizedString("WeatherRequestFailMessage", comment: "")
-        static let errorDismiss = NSLocalizedString("WeatherRequestFailDismiss", comment: "")
-        static let resultsTitle = NSLocalizedString("WeatherResultsTitle", comment: "")
-        static let resultsTemperatureSuffix = NSLocalizedString("WeatherResultsTemperatureSuffix", comment: "")
-        static let resultsDismissLabel = NSLocalizedString("WeatherResultsDismissLabel", comment: "")
-    }
-
     private weak var view: CurrentWeatherView?
     private let router: CurrentWeatherRouter
     private let getCurrentWeatherUseCase: GetCurrentWeatherUseCase
@@ -70,21 +61,15 @@ protocol CurrentWeatherView: AnyObject {
     }
 
     private func handleSuccessful(weather: Weather) {
-        let viewModel = CurrentWeatherViewModel(title: LocalizationKeys.resultsTitle,
-                                                dismissLabel: LocalizationKeys.resultsDismissLabel,
-                                                locationName: weather.name,
-                                                locationTemperature: "\(weather.temperature)\(LocalizationKeys.resultsTemperatureSuffix)",
+        let viewModel = CurrentWeatherViewModel(locationName: weather.name,
+                                                locationTemperature: weather.temperature,
                                                 locationDescription: weather.description)
 
         router.displayWeatherResults(weatherViewModel: viewModel)
     }
 
     private func handleWeatherFailure() {
-        let viewModel = ErrorViewModel(title: LocalizationKeys.errorTitle,
-                                       message: LocalizationKeys.errorMessage,
-                                       dismiss: LocalizationKeys.errorDismiss)
-
-        router.displayError(errorViewModel: viewModel)
+        router.displayError()
     }
 
     private func getRecentSearchTerms() {
