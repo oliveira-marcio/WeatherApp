@@ -32,7 +32,7 @@ extension CurrentWeatherViewController {
         return bar
     }
 
-    func createTableView() -> UITableView{
+    internal func createTableView() -> UITableView{
         let table = UITableView()
         table.accessibilityIdentifier = AccessibilityIdentifiers.recentSearchTermList
         table.register(UITableViewCell.self, forCellReuseIdentifier: AccessibilityIdentifiers.recentSearchTermCellId)
@@ -55,7 +55,7 @@ extension CurrentWeatherViewController {
         }
     }
 
-    func createLoadingIndicator() -> UIActivityIndicatorView {
+    internal func createLoadingIndicator() -> UIActivityIndicatorView {
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.isHidden = true

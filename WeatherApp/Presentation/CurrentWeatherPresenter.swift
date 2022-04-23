@@ -88,7 +88,7 @@ protocol CurrentWeatherView: AnyObject {
         router.displayError(errorViewModel: viewModel)
     }
 
-    @MainActor private func getRecentSearchTerms() {
+    private func getRecentSearchTerms() {
         getRecentSearchTermsUseCase.invoke { [weak self] result in
             if let recentTerms = try? result.get() {
                 self?.currentRecentTerms = recentTerms

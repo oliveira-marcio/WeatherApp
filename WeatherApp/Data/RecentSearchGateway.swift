@@ -8,6 +8,8 @@ enum RecentSearchError: Error {
 protocol RecentSearchGateway {
     func fetchAllTerms(completion: @escaping (Result<[String], RecentSearchError>) -> Void)
     func insert(term: String, completion: @escaping (RecentSearchError?) -> Void)
+    func fetchAllTerms() async throws -> [String]
+    func insert(term: String) async throws
 }
 
 /**
@@ -58,6 +60,24 @@ final class InMemoryRecentSearchGateway: RecentSearchGateway {
             }
         }
     }
+
+    func fetchAllTerms() async throws -> [String] {
+        if fetchShouldFail {
+            throw RecentSearchError.unableToFetch
+        } else {
+            // terms by indexes in reverse order
+            return mapTerms
+                .sorted { $0.1.1 > $1.1.1 }
+                .map { $0.1.0 }
+        }
+    }
+
+    func insert(term: String) async throws {
+        if insertShouldFail {
+            throw RecentSearchError.unableToInsert
+        } else {
+            mapTerms[term.lowercased()] = (term, termIndex)
+            termIndex += 1
+        }
+    }
 }
-
-
