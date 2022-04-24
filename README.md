@@ -30,6 +30,7 @@ API keys must be added on a new file: `/WeatherApp/WeatherApp/Configuration/Secr
 ```
   weather_api_api_key = xxxxxxxxxxxxxxxxxx
 ```
+**Note:** You can also try the app with mocked data without using the API. Just place any value in the file above and run the app with the `Mock` target (check the session below)
 
 ## Run Mock
 
