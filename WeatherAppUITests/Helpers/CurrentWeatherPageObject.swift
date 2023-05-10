@@ -19,22 +19,18 @@ final class CurrentWeatherPageObject: PageObject {
     lazy var loadingView = CurrentWeatherPageObject.proxy.activityIndicators.firstMatch
 
     lazy var currentWeatherSheet = CurrentWeatherPageObject.proxy
-        .sheets[LocalizationKeys.resultsTitle.localized()]
+        .otherElements[LocalizationKeys.resultsTitle.localized()]
 
-    lazy var currentWeatherSheetDismissButton = CurrentWeatherPageObject.proxy
-        .sheets[LocalizationKeys.resultsTitle.localized()]
+    lazy var currentWeatherSheetDismissButton = currentWeatherSheet
         .buttons[LocalizationKeys.resultsDismissLabel.localized()]
     
-    lazy var nyCurrentWeatherLocation = CurrentWeatherPageObject.proxy
-        .sheets[LocalizationKeys.resultsTitle.localized()]
+    lazy var nyCurrentWeatherLocation = currentWeatherSheet
         .buttons["New York, United States of America"]
 
-    lazy var nyCurrentWeatherTemperature = CurrentWeatherPageObject.proxy
-        .sheets[LocalizationKeys.resultsTitle.localized()]
+    lazy var nyCurrentWeatherTemperature = currentWeatherSheet
         .buttons[LocalizationKeys.resultsTemperature.localized(arguments: 4)]
 
-    lazy var nyCurrentWeatherDescription = CurrentWeatherPageObject.proxy
-        .sheets[LocalizationKeys.resultsTitle.localized()]
+    lazy var nyCurrentWeatherDescription = currentWeatherSheet
         .buttons["Partly cloudy"]
 
     lazy var currentWeatherErrorAlert = CurrentWeatherPageObject.proxy
