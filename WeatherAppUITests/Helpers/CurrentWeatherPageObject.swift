@@ -19,7 +19,7 @@ final class CurrentWeatherPageObject: PageObject {
     lazy var loadingView = CurrentWeatherPageObject.proxy.activityIndicators.firstMatch
 
     lazy var currentWeatherSheet = CurrentWeatherPageObject.proxy
-        .otherElements[LocalizationKeys.resultsTitle.localized()]
+        .sheets[LocalizationKeys.resultsTitle.localized()]
 
     lazy var currentWeatherSheetDismissButton = currentWeatherSheet
         .buttons[LocalizationKeys.resultsDismissLabel.localized()]
