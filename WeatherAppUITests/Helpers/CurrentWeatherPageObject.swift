@@ -1,5 +1,6 @@
 import XCTest
 
+@MainActor
 final class CurrentWeatherPageObject: PageObject {
     private enum LocalizationKeys {
         static let errorTitle = "WeatherRequestFailTitle"

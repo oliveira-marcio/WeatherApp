@@ -1,7 +1,8 @@
 import XCTest
 import Foundation
 
-class CurrentWeatherUITests: MockTestCase {
+@MainActor
+final class CurrentWeatherUITests: MockTestCase {
     let currentWeatherPageObject = CurrentWeatherPageObject()
 
     // MARK: - Scene load
