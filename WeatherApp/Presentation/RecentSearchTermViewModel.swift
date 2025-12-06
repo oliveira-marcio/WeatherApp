@@ -1,6 +1,6 @@
 import Foundation
 
-struct RecentSearchTermViewModel: Hashable, Equatable {
+nonisolated struct RecentSearchTermViewModel: Hashable {
     let term: String
 
     init(term: String) {

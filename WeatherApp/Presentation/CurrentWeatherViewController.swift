@@ -12,7 +12,7 @@ class CurrentWeatherViewController: UIViewController {
     typealias DataSource = UITableViewDiffableDataSource<Section, RecentSearchTermViewModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, RecentSearchTermViewModel>
 
-    enum Section { case main }
+    nonisolated enum Section { case main }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,7 @@ extension CurrentWeatherViewController: CurrentWeatherView {
 
     func display(recentTerms: [RecentSearchTermViewModel]) {
         var snapShot = Snapshot()
-        snapShot.appendSections([.main])
+        snapShot.appendSections([Section.main])
         snapShot.appendItems(recentTerms)
         dataSource.apply(snapShot, animatingDifferences: true)
     }
