@@ -27,11 +27,11 @@ final class ComponentPresentation {
     }
 
     lazy var currentWeatherView = CurrentWeatherViewSpy()
-    @MainActor lazy var currentWeatherRouter = CurrentWeatherRouterSpy()
+    lazy var currentWeatherRouter = CurrentWeatherRouterSpy()
     
-    @MainActor lazy var currentWeatherPresenter = CurrentWeatherPresenter(view: currentWeatherView,
-                                                                          router: currentWeatherRouter,
-                                                                          getCurrentWeatherUseCase: domain.getCurrentWeatherUseCase,
-                                                                          getRecentSearchTermsUseCase: domain.getRecentSearchTermsUseCase,
-                                                                          saveSearchTermUseCase: domain.saveSearchTermUseCase)
+    lazy var currentWeatherPresenter = CurrentWeatherPresenter(view: currentWeatherView,
+                                                               router: currentWeatherRouter,
+                                                               getCurrentWeatherUseCase: domain.getCurrentWeatherUseCase,
+                                                               getRecentSearchTermsUseCase: domain.getRecentSearchTermsUseCase,
+                                                               saveSearchTermUseCase: domain.saveSearchTermUseCase)
 }

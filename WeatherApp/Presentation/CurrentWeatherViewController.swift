@@ -19,7 +19,9 @@ class CurrentWeatherViewController: UIViewController {
         setupSubviews()
         setupConstraints()
 
-        presenter.viewDidLoad()
+        Task {
+            await presenter.viewDidLoad()
+        }
     }
     
     /**
@@ -61,13 +63,17 @@ extension CurrentWeatherViewController: UISearchBarDelegate {
         }
 
         searchBar.resignFirstResponder()
-        presenter.onSearchButtonTapped(query: query)
+        Task {
+            await presenter.onSearchButtonTapped(query: query)
+        }
     }
 }
 
 extension CurrentWeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.searchTermTapped(at: indexPath.row)
+        Task {
+            await presenter.searchTermTapped(at: indexPath.row)
+        }
     }
 }
 

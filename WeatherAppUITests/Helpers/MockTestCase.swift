@@ -1,6 +1,7 @@
 import XCTest
 import Foundation
 
+@MainActor
 class MockTestCase: XCTestCase {
     func setupApp(with environment: LaunchEnvironmentKey?) {
         setupApp(with: [environment].compactMap { $0 })

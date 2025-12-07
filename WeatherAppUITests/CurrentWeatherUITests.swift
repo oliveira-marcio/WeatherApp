@@ -30,6 +30,7 @@ final class CurrentWeatherUITests: MockTestCase {
         XCTAssertTrue(currentWeatherPageObject.nyCurrentWeatherDescription.exists)
     }
 
+    // TODO: Fix action sheet dismiss not reachable
     func test_GIVEN_current_weather_results_and_scene_unhittable_WHEN_dismiss_is_tapped_THEN_it_should_dismiss_results_and_scene_is_hittable_again() {
         navigateToCurrentWeather(with: .withCurrentWeather)
 
@@ -59,6 +60,7 @@ final class CurrentWeatherUITests: MockTestCase {
 
     // MARK: - Loading
 
+    // TODO: Fix action sheet dismiss not reachable
     func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_display_loading_view_before_current_weather_results_then_hide_it() {
         navigateToCurrentWeather(with: .withLoadingCurrentWeather, .withRecentSearchTerms)
 

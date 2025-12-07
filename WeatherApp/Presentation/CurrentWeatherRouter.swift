@@ -1,12 +1,12 @@
 import Foundation
 import UIKit
 
-@MainActor protocol CurrentWeatherRouter {
+protocol CurrentWeatherRouter {
     func displayWeatherResults(weatherViewModel: CurrentWeatherViewModel)
     func displayError()
 }
 
-@MainActor final class CurrentWeatherRouterImplementation: CurrentWeatherRouter {
+final class CurrentWeatherRouterImplementation: CurrentWeatherRouter {
     private enum LocalizationKeys {
         static let errorTitle = "WeatherRequestFailTitle"
         static let errorMessage = "WeatherRequestFailMessage"

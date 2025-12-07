@@ -1,106 +1,102 @@
-import XCTest
+import Testing
 @testable import WeatherApp
 
-@MainActor final class CurrentWeatherComponentTests: XCTestCase {
-    private var environment: ComponentTestEnvironment!
-    private var presenter: CurrentWeatherPresenter!
-    private var view: CurrentWeatherViewSpy!
-    private var router: CurrentWeatherRouterSpy!
-    private var weatherGateway: MockWeatherGateway!
-    private var recentSearchGateway: MockRecentSearchGateway!
+@Suite
+struct CurrentWeatherComponentTests {
+    private let environment: ComponentTestEnvironment
+    private let presenter: CurrentWeatherPresenter
+    private let view: CurrentWeatherViewSpy
+    private let router: CurrentWeatherRouterSpy
+    private let weatherGateway: MockWeatherGateway
+    private let recentSearchGateway: MockRecentSearchGateway
 
     private let recentTerms = ["New York", "Lisbon", "Rio de Janeiro"]
 
-    @MainActor override func setUp() {
-        super.setUp()
+    init() {
         environment = ComponentTestEnvironment.bootstrap()
         presenter = environment.presentation.currentWeatherPresenter
         view = environment.presentation.currentWeatherView
         router = environment.presentation.currentWeatherRouter
-        weatherGateway = environment.data.weatherGateway as? MockWeatherGateway
-        recentSearchGateway = environment.data.recentSearchGateway as? MockRecentSearchGateway
-    }
-
-    @MainActor override func tearDown() {
-        super.tearDown()
-        environment = nil
+        weatherGateway = environment.data.weatherGateway as! MockWeatherGateway
+        recentSearchGateway = environment.data.recentSearchGateway as! MockRecentSearchGateway
     }
 
     // MARK: - viewDidLoad
 
-    func test_WHEN_viewDidLoad_THEN_it_should_display_recent_terms() {
+    @Test
+    func WHEN_viewDidLoad_THEN_it_should_display_recent_terms() async {
         recentSearchGateway.fetchAllTermsQueue.set(.success(recentTerms))
 
-        let displayRecentTermsExpectation = expectation(description: "display recent terms expectation")
-        view.displayRecentTermsCompletion = {
-            displayRecentTermsExpectation.fulfill()
+        await confirmation("display recent terms") { viewDidLoad in
+            view.displayRecentTermsCompletion = {
+                viewDidLoad()
+            }
+            
+            await presenter.viewDidLoad()
         }
 
-        presenter.viewDidLoad()
-
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(view.recentTerms, RecentSearchTermViewModel.stubList(from: recentTerms))
+        #expect(view.recentTerms == RecentSearchTermViewModel.stubList(from: recentTerms))
     }
 
     // MARK: - Search & Recent Search List
 
-    func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_display_and_hide_loading_and_display_current_weather() {
+    @Test
+    func GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_display_and_hide_loading_and_display_current_weather() async {
         weatherGateway.fetchCurrentWeatherQueue.set(.success(.nyDummy))
 
-        let displayWeatherExpectation = expectation(description: "display weather expectation")
-        router.displayWeatherCompletion = {
-            displayWeatherExpectation.fulfill()
+        await confirmation("display weather") { searchButtonTapped in
+            router.displayWeatherCompletion = {
+                searchButtonTapped()
+            }
+
+            await presenter.onSearchButtonTapped(query: "New York")
         }
 
-        presenter.onSearchButtonTapped(query: "New York")
-
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(weatherGateway.query, "New York")
-        XCTAssertEqual(router.weatherViewModel, .stub(from: .nyDummy))
-        XCTAssertEqual(view.loadingCalls, [true, false])
-        XCTAssertFalse(router.displayErrorCalled)
+        #expect(weatherGateway.query == "New York")
+        #expect(router.weatherViewModel == .stub(from: .nyDummy))
+        #expect(view.loadingCalls == [true, false])
+        #expect(router.displayErrorCalled == false)
     }
 
-    func test_GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_save_term_and_refresh_recent_terms() {
+    @Test
+    func GIVEN_query_WHEN_search_button_is_tapped_THEN_it_should_save_term_and_refresh_recent_terms() async {
         weatherGateway.fetchCurrentWeatherQueue.set(.success(.nyDummy))
         recentSearchGateway.fetchAllTermsQueue.set(.success(recentTerms))
 
-        let refreshRecentTermsExpectation = expectation(description: "refresh recent terms expectation")
-        view.displayRecentTermsCompletion = {
-            refreshRecentTermsExpectation.fulfill()
+        await confirmation("refresh recent terms") { searchButtonTapped in
+            view.displayRecentTermsCompletion = {
+                searchButtonTapped()
+            }
+
+            await presenter.onSearchButtonTapped(query: "New York")
         }
 
-        presenter.onSearchButtonTapped(query: "New York")
-
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(recentSearchGateway.term, "New York")
-        XCTAssertEqual(view.recentTerms, RecentSearchTermViewModel.stubList(from: recentTerms))
+        #expect(recentSearchGateway.term == "New York")
+        #expect(view.recentTerms == RecentSearchTermViewModel.stubList(from: recentTerms))
     }
 
-    func test_GIVEN_query_WHEN_search_button_is_tapped_and_request_fails_THEN_it_should_display_and_hide_loading_and_display_error() {
+    @Test
+    func GIVEN_query_WHEN_search_button_is_tapped_and_request_fails_THEN_it_should_display_and_hide_loading_and_display_error() async {
         weatherGateway.fetchCurrentWeatherQueue.set(.failure(.operationFailed))
 
-        let displayErrorExpectation = expectation(description: "display error expectation")
-        router.displayErrorCompletion = {
-            displayErrorExpectation.fulfill()
+        await confirmation("display error") { searchButtonTapped in
+            router.displayErrorCompletion = {
+                searchButtonTapped()
+            }
+
+            await presenter.onSearchButtonTapped(query: "New York")
         }
 
-        presenter.onSearchButtonTapped(query: "New York")
-
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(weatherGateway.query, "New York")
-        XCTAssertTrue(router.displayErrorCalled)
-        XCTAssertEqual(view.loadingCalls, [true, false])
-        XCTAssertNil(router.weatherViewModel)
+        #expect(weatherGateway.query == "New York")
+        #expect(router.displayErrorCalled == true)
+        #expect(view.loadingCalls == [true, false])
+        #expect(router.weatherViewModel == nil)
     }
 
     // MARK: - Recent Search List Tap
-
-    func test_GIVEN_recent_search_terms_WHEN_the_last_term_is_tapped_THEN_it_should_update_search_view_with_term_and_perform_search_with_the_term_and_move_the_term_to_the_top_of_the_list() {
+ 
+    @Test
+    func GIVEN_recent_search_terms_WHEN_the_last_term_is_tapped_THEN_it_should_update_search_view_with_term_and_perform_search_with_the_term_and_move_the_term_to_the_top_of_the_list() async {
         let refreshedRecentTerms = ["Rio de Janeiro", "New York", "Lisbon"]
 
         recentSearchGateway.fetchAllTermsQueue.set(.success(recentTerms),
@@ -108,35 +104,29 @@ import XCTest
         
         weatherGateway.fetchCurrentWeatherQueue.set(.success(.rjDummy))
 
-        let displayRecentTermsExpectation = expectation(description: "display recent terms expectation")
-        view.displayRecentTermsCompletion = {
-            displayRecentTermsExpectation.fulfill()
+        await confirmation("display weather and refresh recent terms", expectedCount: 3) { searchButtonTapped in
+            view.displayRecentTermsCompletion = {
+                searchButtonTapped()
+            }
+            
+            router.displayWeatherCompletion = {
+                searchButtonTapped()
+            }
+            
+            view.displayRecentTermsCompletion = {
+                searchButtonTapped()
+            }
+
+            await presenter.viewDidLoad()
+            await presenter.searchTermTapped(at: 2)
         }
-
-        presenter.viewDidLoad()
-
-        waitForExpectations(timeout: 5)
-
-        let displayWeatherExpectation = expectation(description: "display weather expectation")
-        router.displayWeatherCompletion = {
-            displayWeatherExpectation.fulfill()
-        }
-
-        let refreshRecentTermsExpectation = expectation(description: "refresh recent terms expectation")
-        view.displayRecentTermsCompletion = {
-            refreshRecentTermsExpectation.fulfill()
-        }
-
-        presenter.searchTermTapped(at: 2)
-
-        waitForExpectations(timeout: 5)
-
-        XCTAssertEqual(router.weatherViewModel, .stub(from: .rjDummy))
-        XCTAssertEqual(view.searchQuery, "Rio de Janeiro")
-        XCTAssertEqual(recentSearchGateway.term, "Rio de Janeiro")
-        XCTAssertEqual(weatherGateway.query, "Rio de Janeiro")
-        XCTAssertEqual(view.recentTerms, RecentSearchTermViewModel.stubList(from: refreshedRecentTerms))
-        XCTAssertEqual(view.loadingCalls, [true, false])
-        XCTAssertFalse(router.displayErrorCalled)
+        
+        #expect(router.weatherViewModel == .stub(from: .rjDummy))
+        #expect(view.searchQuery == "Rio de Janeiro")
+        #expect(recentSearchGateway.term == "Rio de Janeiro")
+        #expect(weatherGateway.query == "Rio de Janeiro")
+        #expect(view.recentTerms == RecentSearchTermViewModel.stubList(from: refreshedRecentTerms))
+        #expect(view.loadingCalls == [true, false])
+        #expect(router.displayErrorCalled == false)
     }
 }

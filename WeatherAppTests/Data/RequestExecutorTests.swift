@@ -1,23 +1,19 @@
-import XCTest
+import Testing
+import Foundation
 @testable import WeatherApp
 
-final class RequestExecutorTests: XCTestCase {
-    private var urlSessionStub: URLSessionStub!
-    private var requestExecutor: RequestExecutorImplementation!
+@Suite
+struct RequestExecutorTests {
+    private let urlSessionStub: URLSessionStub
+    private let requestExecutor: RequestExecutorImplementation
 
-    override func setUp() {
-        super.setUp()
+    init() {
         urlSessionStub = URLSessionStub()
         requestExecutor = RequestExecutorImplementation(urlSession: urlSessionStub)
     }
 
-    override func tearDown() {
-        super.tearDown()
-        requestExecutor = nil
-        urlSessionStub = nil
-    }
-
-    func test_GIVEN_request_WHEN_data_is_valid_THEN_it_should_return_parsed_entity() async {
+    @Test
+    func GIVEN_request_WHEN_data_is_valid_THEN_it_should_return_parsed_entity() async {
         let responseData = """
         {"test": "success"}
         """.data(using: .utf8)
@@ -28,58 +24,44 @@ final class RequestExecutorTests: XCTestCase {
 
         let entity: TestEntity? = try? await requestExecutor.execute(request: Request())
 
-        XCTAssertEqual(entity, TestEntity(test: "success"))
+        #expect(entity == TestEntity(test: "success"))
     }
 
-    func test_GIVEN_request_WHEN_there_is_an_error_THEN_it_should_return_api_error() async {
+    @Test
+    func GIVEN_request_WHEN_there_is_an_error_THEN_it_should_return_api_error() async {
         urlSessionStub.enqueue(response: (data: nil,
                                           response: nil,
                                           error: SomeError.error))
 
-        var errorResult: ApiError?
-
-        do {
-            _ = try await requestExecutor.execute(request: Request()) as TestEntity
-        } catch {
-            errorResult = error as? ApiError
+        await #expect(throws: ApiError.operationFailed("error")) {
+            try await requestExecutor.execute(request: Request()) as TestEntity
         }
-
-        XCTAssertEqual(errorResult, .operationFailed("error"))
     }
 
-    func test_GIVEN_request_WHEN_there_is_no_response_THEN_it_should_return_api_error() async {
+    @Test
+    func GIVEN_request_WHEN_there_is_no_response_THEN_it_should_return_api_error() async {
         urlSessionStub.enqueue(response: (data: nil,
                                           response: nil,
                                           error: nil))
 
-        var errorResult: ApiError?
-
-        do {
-            _ = try await requestExecutor.execute(request: Request()) as TestEntity
-        } catch {
-            errorResult = error as? ApiError
+        await #expect(throws: ApiError.operationFailed("error")) {
+            try await requestExecutor.execute(request: Request()) as TestEntity
         }
-
-        XCTAssertEqual(errorResult, .operationFailed("error"))
     }
 
-    func test_GIVEN_request_WHEN_response_is_not_success_THEN_it_should_return_api_error() async {
+    @Test
+    func GIVEN_request_WHEN_response_is_not_success_THEN_it_should_return_api_error() async {
         urlSessionStub.enqueue(response: (data: "error".data(using: .utf8),
                                           response: HTTPURLResponse(statusCode: 500),
                                           error: nil))
 
-        var errorResult: ApiError?
-
-        do {
-            _ = try await requestExecutor.execute(request: Request()) as TestEntity
-        } catch {
-            errorResult = error as? ApiError
+        await #expect(throws: ApiError.operationFailed("500")) {
+            try await requestExecutor.execute(request: Request()) as TestEntity
         }
-
-        XCTAssertEqual(errorResult, .operationFailed("500"))
     }
 
-    func test_GIVEN_request_WHEN_response_is_success_and_data_is_invalid_THEN_it_should_return_parse_error() async {
+    @Test
+    func GIVEN_request_WHEN_response_is_success_and_data_is_invalid_THEN_it_should_return_parse_error() async {
         let responseData = """
         {"invalid": "failure"}
         """.data(using: .utf8)
@@ -88,17 +70,9 @@ final class RequestExecutorTests: XCTestCase {
                                           response: HTTPURLResponse(statusCode: 200),
                                           error: nil))
 
-        var parseError = false
-
-        do {
-            _ = try await requestExecutor.execute(request: Request()) as TestEntity
-        } catch {
-            if case .parseError(_) = error as? ApiError {
-                parseError = true
-            }
+        await #expect(throws: ApiError.parseError("The data couldn’t be read because it is missing.")) {
+            try await requestExecutor.execute(request: Request()) as TestEntity
         }
-
-        XCTAssertTrue(parseError)
     }
 
     enum SomeError: Error, LocalizedError {
