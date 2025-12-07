@@ -18,6 +18,7 @@ class CurrentWeatherViewController: UIViewController {
         super.viewDidLoad()
         setupSubviews()
         setupConstraints()
+        registerForTraitChanges()
 
         Task {
             await presenter.viewDidLoad()
@@ -28,12 +29,12 @@ class CurrentWeatherViewController: UIViewController {
      * Workaround to force the search bar border color update on traitCollectionDidChange()
      * It should be properly handled in a custom view
      */
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            searchBar.searchTextField.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor
-        }
+    private func registerForTraitChanges() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { (self: Self, previousTraitCollection: UITraitCollection) in
+            if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.searchBar.searchTextField.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor
+            }
+        })
     }
 }
 

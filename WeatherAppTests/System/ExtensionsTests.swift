@@ -11,7 +11,7 @@ struct ExtensionsTests {
         let lightColor = UIColor.black
         let darkColor = UIColor.white
 
-        let lightTrait = UITraitCollection(traitsFrom: [.current, .init(userInterfaceStyle: .light)])
+        let lightTrait = UITraitCollection.current.modifyingTraits { $0.userInterfaceStyle = .light }
         let dynamicColor: UIColor = .dynamicColor(light: lightColor, dark: darkColor)
 
         #expect(dynamicColor.resolvedColor(with: lightTrait) == lightColor)
@@ -22,7 +22,7 @@ struct ExtensionsTests {
         let lightColor = UIColor.black
         let darkColor = UIColor.white
 
-        let darkTrait = UITraitCollection(traitsFrom: [.current, .init(userInterfaceStyle: .dark)])
+        let darkTrait = UITraitCollection.current.modifyingTraits { $0.userInterfaceStyle = .dark }
         let dynamicColor: UIColor = .dynamicColor(light: lightColor, dark: darkColor)
 
         #expect(dynamicColor.resolvedColor(with: darkTrait) == darkColor)
@@ -44,3 +44,4 @@ struct ExtensionsTests {
         #expect(list[safe: 10] == nil)
     }
 }
+
