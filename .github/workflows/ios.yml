@@ -1,0 +1,23 @@
+name: iOS starter workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build and Test default scheme using any available iPhone simulator
+    runs-on: macos-26
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Unit Tests
+        run: |
+          xcodebuild test -project WeatherApp.xcodeproj -scheme WeatherApp -destination "platform=iOS Simulator,name=iPhone 17 Pro"
+      - name: UI Tests
+        run: |
+          xcodebuild test -project WeatherApp.xcodeproj -scheme Mock -destination "platform=iOS Simulator,name=iPhone 17 Pro"
+ 
