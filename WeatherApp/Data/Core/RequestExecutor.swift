@@ -23,7 +23,7 @@ final class RequestExecutorImplementation: RequestExecutor {
         self.urlSession = urlSession
     }
     
-    func execute<T>(request: URLRequestable) async throws -> T where T : Decodable {
+    func execute<T>(request: URLRequestable) async throws -> T where T: Decodable {
         let (data, response) = try await urlSession.data(for: request.urlRequest)
 
         // Check if we have a `HTTPURLResponse`

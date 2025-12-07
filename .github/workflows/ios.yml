@@ -1,4 +1,4 @@
-name: iOS starter workflow
+name: iOS Tests
 
 on:
   push:
@@ -16,8 +16,22 @@ jobs:
         uses: actions/checkout@v4
       - name: Unit Tests
         run: |
-          xcodebuild test -project WeatherApp.xcodeproj -scheme WeatherApp -destination "platform=iOS Simulator,name=iPhone 17 Pro"
+          xcodebuild clean test \
+          -project WeatherApp.xcodeproj \
+          -scheme WeatherApp \
+          -destination "platform=iOS Simulator,name=iPhone 17 Pro" \
+          -skipPackagePluginValidation \
+          -skipMacroValidation \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO
       - name: UI Tests
         run: |
-          xcodebuild test -project WeatherApp.xcodeproj -scheme Mock -destination "platform=iOS Simulator,name=iPhone 17 Pro"
- 
+          xcodebuild test \
+          -project WeatherApp.xcodeproj \
+          -scheme Mock \
+          -destination "platform=iOS Simulator,name=iPhone 17 Pro" \
+          -skipPackagePluginValidation \
+          -skipMacroValidation \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO
+

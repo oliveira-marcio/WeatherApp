@@ -4,7 +4,6 @@ final class CurrentWeatherViewConfigurator {
         let getRecentSearchTermsUseCase = SceneDelegate.appEnvironment.domain.getRecentSearchTermsUseCase
         let saveSearchTermUseCase = SceneDelegate.appEnvironment.domain.saveSearchTermUseCase
 
-
         let router = CurrentWeatherRouterImplementation(currentWeatherViewController: view)
         let presenter = CurrentWeatherPresenter(view: view,
                                                 router: router,

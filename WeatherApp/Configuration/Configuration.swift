@@ -33,4 +33,3 @@ enum Configuration {
         return urlHost
     }
 }
-

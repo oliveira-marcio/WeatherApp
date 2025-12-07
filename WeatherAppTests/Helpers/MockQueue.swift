@@ -66,4 +66,3 @@ class MockQueue<T> {
         enqueue(elements)
     }
 }
-

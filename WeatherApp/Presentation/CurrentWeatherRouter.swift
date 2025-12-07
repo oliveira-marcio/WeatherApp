@@ -35,7 +35,7 @@ final class CurrentWeatherRouterImplementation: CurrentWeatherRouter {
 
         resultsController.addAction(UIAlertAction(title: LocalizationKeys.resultsDismissLabel.localized(), style: .cancel))
 
-        currentWeatherViewController.present(resultsController, animated: true) {() -> Void in
+        currentWeatherViewController.present(resultsController, animated: true) { 
             // Disable scene interactions to avoid results dismiss on tapping outside
             resultsController.view.superview?.subviews[0].isUserInteractionEnabled = false
         }

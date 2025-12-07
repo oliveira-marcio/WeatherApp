@@ -36,7 +36,7 @@ extension CurrentWeatherViewController {
         return bar
     }
 
-    internal func createTableView() -> UITableView{
+    internal func createTableView() -> UITableView {
         let table = UITableView()
         table.accessibilityIdentifier = AccessibilityIdentifiers.recentSearchTermList
         table.register(UITableViewCell.self, forCellReuseIdentifier: AccessibilityIdentifiers.recentSearchTermCellId)
