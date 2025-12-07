@@ -1,12 +1,12 @@
 import Foundation
 import UIKit
 
-@MainActor protocol CurrentWeatherRouter {
+protocol CurrentWeatherRouter {
     func displayWeatherResults(weatherViewModel: CurrentWeatherViewModel)
     func displayError()
 }
 
-@MainActor final class CurrentWeatherRouterImplementation: CurrentWeatherRouter {
+final class CurrentWeatherRouterImplementation: CurrentWeatherRouter {
     private enum LocalizationKeys {
         static let errorTitle = "WeatherRequestFailTitle"
         static let errorMessage = "WeatherRequestFailMessage"
@@ -34,12 +34,6 @@ import UIKit
         resultsController.addAction(createAlertAction(title: weatherViewModel.locationDescription))
 
         resultsController.addAction(UIAlertAction(title: LocalizationKeys.resultsDismissLabel.localized(), style: .cancel))
-
-        if let popoverController = resultsController.popoverPresentationController {
-            popoverController.sourceView = currentWeatherViewController.view
-            popoverController.sourceRect = currentWeatherViewController.view.bounds
-            popoverController.permittedArrowDirections = []
-        }
 
         currentWeatherViewController.present(resultsController, animated: true) {() -> Void in
             // Disable scene interactions to avoid results dismiss on tapping outside

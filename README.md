@@ -6,12 +6,12 @@ Weather App for iOS - Small iOS app made with Swift and UIKit, based on [Clean A
 - Fetches current weather for a location using a query search
 - Keeps history of recent search terms for quick search
 - UI in plain UIKit (no Storyboards 🎉)
-- Structured concurrency with async/await and actors
+- Swift 6.2 structured concurrency with complete checking
 - Extra `Mock` target to run the app with mocked data (more details below)
 - Ready for localization
 - Dark mode
 - Tests:
-  - Unit tests
+  - Unit tests with Swift Testing framework
   - Component tests (basically presenter tests with real domain dependencies, except for the gateways, views, and routers)
   - UI tests
 - Based on architectures like [VIPER](https://www.raywenderlich.com/8440907-getting-started-with-the-viper-architecture-pattern) and [Clean Swift](https://clean-swift.com/), with the following layers
@@ -20,7 +20,7 @@ Weather App for iOS - Small iOS app made with Swift and UIKit, based on [Clean A
   - Presentation (Presenter, Views, ViewModels, and Router, using an MVP approach)
 
 ## Things to improve
-- Should implement a real DB with CoreData for persisting the recent search terms (currently using an in-memory DB)
+- Should implement a real DB with CoreData/SwiftData for persisting the recent search terms (currently using an in-memory DB)
 - Project should be modularized in packages with no code related to iOS (Domain, Data and Presentation), so unit tests can run in a MacOS target without simulators 
 - UI with SwiftUI, so we'll have live preview and less boilerplate
 

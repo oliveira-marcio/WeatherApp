@@ -1,42 +1,33 @@
-import XCTest
+import Testing
 @testable import WeatherApp
 
-final class SaveSearchTermUseCaseTests: XCTestCase {
-    private var recentSearchGateway: MockRecentSearchGateway!
-    private var saveSearchTermUseCase: SaveSearchTermUseCaseImplementation!
+@Suite
+struct SaveSearchTermUseCaseTests {
+    private let recentSearchGateway: MockRecentSearchGateway
+    private let saveSearchTermUseCase: SaveSearchTermUseCaseImplementation
 
-    override func setUp() {
-        super.setUp()
+    init() {
         recentSearchGateway = MockRecentSearchGateway()
         saveSearchTermUseCase = SaveSearchTermUseCaseImplementation(recentSearchGateway: recentSearchGateway)
     }
 
-    override func tearDown() {
-        super.tearDown()
-        saveSearchTermUseCase = nil
-        recentSearchGateway = nil
-    }
-
-    func test_GIVEN_term_WHEN_use_case_is_invoked_THEN_it_should_return_no_error() async throws {
+    @Test
+    func GIVEN_term_WHEN_use_case_is_invoked_THEN_it_should_return_no_error() async throws {
         recentSearchGateway.insertTermQueue.set(nil)
 
         try await saveSearchTermUseCase.invoke(term: "Rio")
 
-        XCTAssertEqual(recentSearchGateway.term, "Rio")
+        #expect(recentSearchGateway.term == "Rio")
     }
 
-    func test_GIVEN_term_WHEN_use_case_is_invoked_and_gateway_fails_THEN_it_should_return_insert_error() async {
+    @Test
+    func GIVEN_term_WHEN_use_case_is_invoked_and_gateway_fails_THEN_it_should_return_insert_error() async {
         recentSearchGateway.insertTermQueue.set(.unableToInsert)
 
-        var errorResult: RecentSearchError?
-
-        do {
+        await #expect(throws: RecentSearchError.unableToInsert) {
             try await saveSearchTermUseCase.invoke(term: "Rio")
-        } catch {
-            errorResult = error as? RecentSearchError
         }
-
-        XCTAssertEqual(recentSearchGateway.term, "Rio")
-        XCTAssertEqual(errorResult, .unableToInsert)
+        
+        #expect(recentSearchGateway.term == "Rio")
     }
 }

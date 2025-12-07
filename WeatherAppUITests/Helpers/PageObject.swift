@@ -1,11 +1,11 @@
 import XCTest
 
-protocol PageObject {
+@MainActor protocol PageObject {
     var sceneId: String { get }
     var isOnPage: Bool { get }
 }
 
-extension PageObject {
+@MainActor extension PageObject {
     static var proxy: XCUIApplication { XCUIApplication() }
     var sceneElement: XCUIElement { Self.proxy.otherElements[sceneId] }
 
@@ -20,7 +20,7 @@ extension PageObject {
     var keyboard: XCUIElement { Self.proxy.keyboards.element }
 }
 
-extension XCTestCase {
+@MainActor extension XCTestCase {
     func waitForElementToAppear(_ element: XCUIElement) {
         let existsPredicate = NSPredicate(format: "exists == true")
         expectation(for: existsPredicate, evaluatedWith: element, handler: nil)

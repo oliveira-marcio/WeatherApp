@@ -12,26 +12,29 @@ class CurrentWeatherViewController: UIViewController {
     typealias DataSource = UITableViewDiffableDataSource<Section, RecentSearchTermViewModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, RecentSearchTermViewModel>
 
-    enum Section { case main }
+    nonisolated enum Section { case main }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubviews()
         setupConstraints()
+        registerForTraitChanges()
 
-        presenter.viewDidLoad()
+        Task {
+            await presenter.viewDidLoad()
+        }
     }
     
     /**
      * Workaround to force the search bar border color update on traitCollectionDidChange()
      * It should be properly handled in a custom view
      */
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-
-        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            searchBar.searchTextField.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor
-        }
+    private func registerForTraitChanges() {
+        registerForTraitChanges([UITraitUserInterfaceStyle.self], handler: { (self: Self, previousTraitCollection: UITraitCollection) in
+            if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+                self.searchBar.searchTextField.layer.borderColor = UIColor.dynamicColor(light: .black, dark: .white).cgColor
+            }
+        })
     }
 }
 
@@ -44,7 +47,7 @@ extension CurrentWeatherViewController: CurrentWeatherView {
 
     func display(recentTerms: [RecentSearchTermViewModel]) {
         var snapShot = Snapshot()
-        snapShot.appendSections([.main])
+        snapShot.appendSections([Section.main])
         snapShot.appendItems(recentTerms)
         dataSource.apply(snapShot, animatingDifferences: true)
     }
@@ -61,13 +64,17 @@ extension CurrentWeatherViewController: UISearchBarDelegate {
         }
 
         searchBar.resignFirstResponder()
-        presenter.onSearchButtonTapped(query: query)
+        Task {
+            await presenter.onSearchButtonTapped(query: query)
+        }
     }
 }
 
 extension CurrentWeatherViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        presenter.searchTermTapped(at: indexPath.row)
+        Task {
+            await presenter.searchTermTapped(at: indexPath.row)
+        }
     }
 }
 

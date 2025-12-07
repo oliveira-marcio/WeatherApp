@@ -7,8 +7,8 @@ protocol CurrentWeatherView: AnyObject {
     func display(searchQuery: String)
 }
 
-@MainActor final class CurrentWeatherPresenter {
-    private weak var view: CurrentWeatherView?
+final class CurrentWeatherPresenter {
+    private(set) weak var view: CurrentWeatherView?
     private let router: CurrentWeatherRouter
     private let getCurrentWeatherUseCase: GetCurrentWeatherUseCase
     private let getRecentSearchTermsUseCase: GetRecentSearchTermsUseCase
@@ -28,35 +28,33 @@ protocol CurrentWeatherView: AnyObject {
         self.saveSearchTermUseCase = saveSearchTermUseCase
     }
 
-    func viewDidLoad() {
-        getRecentSearchTerms()
+    func viewDidLoad() async {
+        await getRecentSearchTerms()
     }
 
-    func onSearchButtonTapped(query: String) {
+    func onSearchButtonTapped(query: String) async {
         view?.display(loading: true)
-        saveSearchTerm(query)
-        getCurrentWeather(for: query)
+        await saveSearchTerm(query)
+        await getCurrentWeather(for: query)
     }
 
-    func searchTermTapped(at index: Int) {
+    func searchTermTapped(at index: Int) async {
         guard let query = currentRecentTerms[safe: index] else { return }
 
         view?.display(searchQuery: query)
-        onSearchButtonTapped(query: query)
+        await onSearchButtonTapped(query: query)
     }
 
-    private func getCurrentWeather(for query: String) {
-        Task {
-            let weather = try? await getCurrentWeatherUseCase.invoke(query: query)
-
-            view?.display(loading: false)
-            getRecentSearchTerms()
-
-            if let weather = weather {
-                handleSuccessful(weather: weather)
-            } else {
-                handleWeatherFailure()
-            }
+    private func getCurrentWeather(for query: String) async {
+        let weather = try? await getCurrentWeatherUseCase.invoke(query: query)
+        
+        view?.display(loading: false)
+        await getRecentSearchTerms()
+        
+        if let weather = weather {
+            handleSuccessful(weather: weather)
+        } else {
+            handleWeatherFailure()
         }
     }
 
@@ -72,17 +70,13 @@ protocol CurrentWeatherView: AnyObject {
         router.displayError()
     }
 
-    private func getRecentSearchTerms() {
-        Task {
-            let recentTerms = (try? await getRecentSearchTermsUseCase.invoke()) ?? []
-            currentRecentTerms = recentTerms
-            view?.display(recentTerms: recentTerms.map { RecentSearchTermViewModel(term: $0) })
-        }
+    private func getRecentSearchTerms() async {
+        let recentTerms = (try? await getRecentSearchTermsUseCase.invoke()) ?? []
+        currentRecentTerms = recentTerms
+        view?.display(recentTerms: recentTerms.map { RecentSearchTermViewModel(term: $0) })
     }
-
-    private func saveSearchTerm(_ term: String) {
-        Task {
-            try? await saveSearchTermUseCase.invoke(term: term)
-        }
+    
+    private func saveSearchTerm(_ term: String) async {
+        try? await saveSearchTermUseCase.invoke(term: term)
     }
 }
